@@ -1,0 +1,49 @@
+[
+  {
+    "_id": "5530c570a59afc0d00d9cfdc",
+    "email": "net@citizen.com",
+    "currentProvider": "google",
+    "providers": {
+      "google": {
+        "kind": "plus#person",
+        "etag": "\"RqKWnRU4WW46-6W3rWhLR9iFZQM/lC6ACTdBGehfUBnznIXYUXmSGr1\"",
+        "gender": "male",
+        "emails": [
+          {
+            "value": "net@citizen.com",
+            "type": "account"
+          }
+        ],
+        "objectType": "person",
+        "id": "105434308766379322442",
+        "displayName": "Net Citizen",
+        "name": {
+          "familyName": "Citizen",
+          "givenName": "Net"
+        },
+        "url": "https://plus.google.com/103434308786179622443",
+        "image": {
+          "url": "https://lh3.googleusercontent.com/-XdUIqdMkCWC/AAAAAAAAAAI/AAAAAAAAAAA/6252fscbu5M/photo.jpg?sz=50",
+          "isDefault": true
+        },
+        "isPlusUser": true,
+        "circledByCount": 1,
+        "verified": false
+      },
+      "facebook": {
+        "verified": false,
+        "updated_time": "2015-05-03T05:43:38+0000",
+        "timezone": 8,
+        "name": "Net Citizen",
+        "locale": "en_US",
+        "link": "https://www.facebook.com/app_scoped_user_id/265849783331351/",
+        "last_name": "Citizen",
+        "gender": "male",
+        "first_name": "net",
+        "email": "net@citizen.com",
+        "id": "265849783331351"
+      }
+    },
+    "__v": 0
+  }
+]

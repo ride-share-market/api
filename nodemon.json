@@ -1,0 +1,23 @@
+{
+  "script": "server.js",
+  "restartable": "rs",
+  "ignore": [
+    ".git",
+    "node_modules",
+    ".idea",
+    "log"
+  ],
+  "verbose": true,
+  "execMap": {
+    "js": "node"
+  },
+  "watch": [
+    "server.js",
+    "config/*.js",
+    "httpd/**/*.js"
+  ],
+  "env": {
+    "NODE_ENV": "loc",
+    "DEBUG": "koa*"
+  }
+}

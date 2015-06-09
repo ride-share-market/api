@@ -1,0 +1,26 @@
+{
+  "kind": "plus#person",
+  "etag": "pNz5TVTpPz2Rn5Xw8UrubkkbOJ0/8wII0zxjh6EMZTkJA--p6DSI-wX",
+  "gender": "male",
+  "emails": [
+    {
+      "value": "net@citizen.com",
+      "type": "account"
+    }
+  ],
+  "objectType": "person",
+  "id": "109515962716719253613",
+  "displayName": "Net Citizen",
+  "name": {
+    "familyName": "Citizen",
+    "givenName": "Net"
+  },
+  "url": "https://plus.google.com/109511962727719553613",
+  "image": {
+    "url": "https://lh3.googleusercontent.com/-eLAFwuSEM2x/AAAAAAAAAAI/AAAAAAAAACg/dWlcwoWU533/photo.jpg?sz=50",
+    "isDefault": false
+  },
+  "isPlusUser": true,
+  "circledByCount": 8,
+  "verified": false
+}
