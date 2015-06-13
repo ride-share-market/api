@@ -61,38 +61,31 @@
 
     <!-- Initialize application configs -->
 
-    <target name="gulp-init" depends="npm-local">
-        <exec executable="${node.path}/gulp" failonerror="true">
-            <env key="PATH" path="${node.path}:${env.PATH}"/>
-            <arg value="init"/>
-        </exec>
+    <target name="copy-config" depends="npm-local">
+        <copy todir="config/env">
+            <fileset dir="${env.HOME}/data/api/config/env"/>
+        </copy>
     </target>
 
-    <target name="gulp-test" depends="gulp-init">
+    <target name="gulp-test" depends="copy-config">
         <exec executable="${node.path}/gulp" failonerror="true">
             <env key="PATH" path="${node.path}:${env.PATH}"/>
             <arg value="test"/>
         </exec>
     </target>
 
-    <target name="gulp-lint" depends="gulp-test">
+    <target name="gulp-lint" depends="copy-config">
         <exec executable="${node.path}/gulp" failonerror="true">
             <env key="PATH" path="${node.path}:${env.PATH}"/>
             <arg value="lint"/>
         </exec>
     </target>
 
-    <target name="main2" depends="gulp-lint">
+    <target name="main" depends="gulp-lint">
         <exec executable="grep">
             <arg value="version"/>
             <arg value="package.json"/>
         </exec>
-    </target>
-
-    <target name="main">
-        <copy todir="config/env">
-            <fileset dir="${env.HOME}/data/api/config/env"/>
-        </copy>
     </target>
 
 </project>
