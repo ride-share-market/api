@@ -3,6 +3,8 @@
 
     <property environment="env"/>
 
+    <property name="config.src" value="/home/ubuntu/config/app/config/env"/>
+
     <property name="node.version" value="1.5.1"/>
 
     <property name="node.src" value="/var/lib/jenkins/tmp"/>
@@ -63,7 +65,7 @@
 
     <target name="copy-config" depends="npm-local">
         <copy todir="config/env">
-            <fileset dir="${env.HOME}/data/api/config/env"/>
+            <fileset dir="${config.src}"/>
         </copy>
     </target>
 
