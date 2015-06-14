@@ -64,7 +64,7 @@
     <!-- Initialize application configs -->
 
     <target name="copy-config" depends="npm-local">
-        <copy todir="config/env" overwrite="true">
+        <copy todir="config/env" overwrite="true" verbose="true">
             <fileset dir="${config.src}"/>
         </copy>
     </target>
