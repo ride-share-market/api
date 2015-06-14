@@ -189,17 +189,16 @@ describe('Users', function () {
               }
 
               // Raw response test
-              res.text.should.match(/{"users":\[{"_id":/);
+              res.text.should.match(/{"users":{"_id":/);
 
               // Parse response test
               var jsonResponse = JSON.parse(res.text);
 
               should.exist(jsonResponse.users);
-              assert.isArray(jsonResponse.users, 'Top level response property should be an Array');
+              assert.isObject(jsonResponse.users, 'Top level response property should be an Object');
 
               // First element in the response array should be the requested user
-              should.exist(jsonResponse.users[0]);
-              jsonResponse.users[0]._id.should.equal(userIdFixture);
+              jsonResponse.users._id.should.equal(userIdFixture);
 
               done();
             });
