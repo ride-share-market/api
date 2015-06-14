@@ -3,7 +3,7 @@
 
     <property environment="env"/>
 
-    <property name="config.src" value="/home/ubuntu/config/app/config/env"/>
+    <property name="config.src" value="/home/ubuntu/config/api/config/env"/>
 
     <property name="node.version" value="1.5.1"/>
 
