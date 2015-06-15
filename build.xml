@@ -76,7 +76,7 @@
         </exec>
     </target>
 
-    <target name="gulp-lint" depends="copy-config">
+    <target name="gulp-lint" depends="gulp-test">
         <exec executable="${node.path}/gulp" failonerror="true">
             <env key="PATH" path="${node.path}:${env.PATH}"/>
             <arg value="lint"/>
