@@ -9,7 +9,7 @@
   "strict": true,
   "eqeqeq": true,
   "immed": true,
-  "latedef": true,
+  "latedef": false,
   "newcap": true,
   "curly": true,
   "noarg": true,

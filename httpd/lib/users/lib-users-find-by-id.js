@@ -1,7 +1,6 @@
 'use strict';
 
-var assert = require('chai').assert,
-  co = require('co'),
+var co = require('co'),
   q = require('q');
 
 var config = require('./../../../config/app'),

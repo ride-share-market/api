@@ -11,8 +11,7 @@ module.exports = function (router) {
   router.get('/rideshares', function *() {
 
     try {
-      var rideshares = yield ridesharesController.findAll();
-      this.body = rideshares;
+      this.body = yield ridesharesController.findAll();
     }
     catch (e) {
       this.throw(e.status, {message: {errors: e.errors}});
@@ -22,8 +21,7 @@ module.exports = function (router) {
   router.get('/rideshares/:id', function *() {
 
     try {
-      var rideshares = yield ridesharesController.findById(this.params.id);
-      this.body = rideshares;
+      this.body = yield ridesharesController.findById(this.params.id);
     }
     catch (e) {
       this.throw(e.status, {message: {errors: e.errors}});
@@ -33,10 +31,9 @@ module.exports = function (router) {
 
   router.post('/rideshares', auth(), function *() {
 
-    // curl -i -H 'Accept: application/vnd.api+json' -H 'Content-Type: application/vnd.api+json' --data '{"itinerary": { "route": [{"place": "Melbourne"},{"place": "Sydney"}],"type": "Wanted"}}' localhost:3001/rideshares
+    // TODO: validate body (id, user id, itinerary etc)
 
     var assert = require('assert');
-      //q = require('q');
 
     function buildRideshare(userId, requestBody) {
 
