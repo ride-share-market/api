@@ -11,6 +11,8 @@ module.exports = function rpcCreateRideshare(rideshare) {
 
   assert.equal(typeof (rideshare), 'object', 'argument rideshare must be an object');
 
+  // TODO: validate rideshare json w/ zschema
+
   var deferred = q.defer();
 
   var jsonRpcMessage = rpcBuildJsonRpcRequest({

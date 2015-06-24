@@ -2,6 +2,7 @@
 
 var config = require('./../../config/app'),
   auth = require(config.get('root') + '/httpd/middlewares/authorization'),
+  usersFindById = require(config.get('root') + '/httpd//lib/users/lib-users-find-by-id'),
   ridesharesController = require(config.get('root') + '/httpd/controllers/rideshares'),
   userPolicy = require(config.get('root') + '/httpd/lib/users/users-policy');
 
@@ -40,29 +41,22 @@ module.exports = function (router) {
     function buildRideshare(userId, requestBody) {
 
       assert.equal(typeof (userId), 'string', 'argument userId must be a string');
+
       assert.equal(typeof (requestBody), 'object', 'argument requestBody must be an object');
 
       var rideshare = requestBody;
-      // TODO: validate userId is active user
-      rideshare.user = userId;
-      return rideshare;
 
-      //return q.reject({
-      //    status: 400,
-      //    errors: [
-      //      {
-      //        code: 'invalid_format',
-      //        title: 'Invalid Rideshare.'
-      //      }
-      //    ]
-      //  }
-      //);
+      rideshare.user = userId;
+
+      return rideshare;
 
     }
 
     try {
 
-      var rideshare = yield buildRideshare(this.jwtToken.id, this.request.body);
+      var validUser = yield usersFindById(this.jwtToken.id);
+
+      var rideshare = yield buildRideshare(validUser.users._id, this.request.body);
 
       var newRrideshare = yield ridesharesController.create(rideshare);
 
@@ -78,12 +72,24 @@ module.exports = function (router) {
 
     try {
 
-      // TODO: validate user is owner
-      // TODO: validate body
+      // TODO: validate body (id, user id, itinerary etc)
 
-      var result = yield ridesharesController.update(this.request.body);
+      // Check requesting user is valid
+      var validUser = yield usersFindById(this.jwtToken.id);
 
-      this.body = result;
+      // Check requester is the owner of this rideshare
+      if(validUser.users._id !== this.request.body.user) {
+        this.throw(401, {
+          errors: [
+            {
+              code: 'authorization_required',
+              title: 'Please sign in to complete this request.'
+            }
+          ]
+        });
+      }
+
+      this.body = yield ridesharesController.update(this.request.body);
     }
     catch (e) {
       this.throw(e.status, {message: {errors: e.errors}});
@@ -95,11 +101,14 @@ module.exports = function (router) {
 
     try {
 
-      // 1st fetch the item to be removed
+      // 1st check user is valid
+      var validUser = yield usersFindById(this.jwtToken.id);
+
+      // 2nd fetch the item to be removed
       var rideshares = yield ridesharesController.findById(this.params.id);
 
-      // 2nd validate the requester is the owner
-      if(!userPolicy.isOwner(this.jwtToken.id, rideshares.rideshares[0])) {
+      // 3rd validate the requester is the owner
+      if(!userPolicy.isOwner(validUser.users._id, rideshares.rideshares[0])) {
         this.throw(401, {
             errors: [
               {

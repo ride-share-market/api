@@ -33,10 +33,12 @@ An error response may have one or more error objects with these properties:
 
 - `gulp init`
 - Update the development and test .json files (ie. UPDATE-THIS-VALUE)
-- The MongoDB database needs a default user created
+- The MongoDB database needs a some default users created for the tests to pass.
 - `mongo rsm-dev`
 - `db.users.insert({"email": "net@citizen.com","currentProvider": "google","providers": {"google": {"displayName": "Net Citizen","url": "https://plus.google.com/103434308786179622443","image": {"url": "https://lh3.googleusercontent.com/photo.jpg?sz=50","isDefault": true}}}})`
 - Copy the _id from the new user to [test/fixtures/user_id.txt](test/fixtures/user_id.txt)
+- `db.users.insert({"email": "web@citizen.com","currentProvider": "google","providers": {"google": {"displayName": "Web Citizen","url": "https://plus.google.com/103434308786179622444","image": {"url": "https://lh4.googleusercontent.com/photo.jpg?sz=50","isDefault": true}}}})`
+- Copy the _id from the new user to [test/fixtures/user2_id.txt](test/fixtures/user2_id.txt)
 - `db.users.find()`
 
 ## Gulp Tasks

@@ -10,7 +10,7 @@ var config = require('./../../../config/app'),
   rideshareUpdate = require('./controller-rideshares-update');
 
 var rideshareFixture = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/rideshare_1.json').toString()),
-  userIdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/user_id.txt').toString(),
+  userIdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/user1_id.txt').toString(),
   rpcResult = fs.readFileSync(config.get('root') + '/test/fixtures/rpc_response_rpc-rideshares.json');
 
 rideshareFixture.user = userIdFixture;

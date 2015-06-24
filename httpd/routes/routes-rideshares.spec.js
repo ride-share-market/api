@@ -13,11 +13,18 @@ var http = require('http'),
   fs = require('fs');
 
 var config = require('../../config/app'),
-  userIdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/user_id.txt').toString(),
+
   rideshareFixture = fs.readFileSync(config.get('root') + '/test/fixtures/rideshare_1.json').toString(),
   jwtManager = require(config.get('root') + '/httpd/lib/jwt/jwtManager'),
-  jwt = jwtManager.issueToken({name: 'Net Citizen', id: userIdFixture}),
-  jwt2 = jwtManager.issueToken({name: 'Net Citizen 2', id: '5530c570a59afc0d00d9cfdd'}),
+
+  user1IdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/user1_id.txt').toString(),
+  user2IdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/user2_id.txt').toString(),
+  unknownUserIdFixture = '5530c570a59afc0d00d9cfdd',
+
+  jwt = jwtManager.issueToken({name: 'Net Citizen', id: user1IdFixture}),
+  jwt2 = jwtManager.issueToken({name: 'Web Citizen', id: user2IdFixture}),
+  jwt3 = jwtManager.issueToken({name: 'Unkown Citizen', id: unknownUserIdFixture}),
+
   rpcPublisher = require(config.get('root') + '/httpd/lib/rpc/rpc-publisher'),
   rideshare;
 
@@ -51,8 +58,6 @@ app
 
 var server = http.createServer(app.callback());
 
-
-
 describe('Routes', function() {
 
   describe('Rideshares', function () {
@@ -65,6 +70,29 @@ describe('Routes', function() {
     });
 
     describe('POST', function() {
+
+      it('should 404 reject an unknown user account', function(done) {
+        request(server)
+          .post('/rideshares')
+          .set('Accept', 'application/vnd.api+json')
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', 'Bearer ' + jwt3)
+          .send(rideshareFixture)
+          .expect('Content-Type', /application\/vnd\.api\+json/)
+          .expect(404)
+          .end(function (err, res) {
+            if (err) {
+              return done(err);
+            }
+
+            var result = JSON.parse(res.text);
+            result.errors.should.be.an.instanceof(Array);
+            result.errors[0].code.should.equal('not_found');
+            result.errors[0].title.should.equal('Account profile not found.');
+            done();
+          });
+
+      });
 
       it('should 200 create a new rideshare', function(done) {
 
@@ -173,6 +201,55 @@ describe('Routes', function() {
 
     describe('PUT', function() {
 
+      it('should 401 reject update if not rideshare owner', function(done) {
+
+        request(server)
+          .put('/rideshares/' + rideshare._id)
+          .set('Accept', 'application/vnd.api+json')
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', 'Bearer ' + jwt2)
+          .send(JSON.stringify(rideshare))
+          .expect('Content-Type', /application\/vnd\.api\+json/)
+          .expect(401)
+          .end(function (err, res) {
+            if (err) {
+              return done(err);
+            }
+
+            var result = JSON.parse(res.text);
+            result.errors.should.be.an.instanceof(Array);
+            result.errors[0].code.should.equal('authorization_required');
+            result.errors[0].title.should.equal('Please sign in to complete this request.');
+            done();
+          });
+
+      });
+
+      it('should 404 reject an unknown user account', function(done) {
+
+        request(server)
+          .put('/rideshares/' + rideshare._id)
+          .set('Accept', 'application/vnd.api+json')
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', 'Bearer ' + jwt3)
+          .send(JSON.stringify(rideshare))
+          .expect('Content-Type', /application\/vnd\.api\+json/)
+          .expect(404)
+          .end(function (err, res) {
+            if (err) {
+              return done(err);
+            }
+
+            var result = JSON.parse(res.text);
+            result.errors.should.be.an.instanceof(Array);
+            result.errors[0].code.should.equal('not_found');
+            result.errors[0].title.should.equal('Account profile not found.');
+            done();
+          });
+
+      });
+
+
       it('should 200 update a rideshare', function(done) {
 
         rideshare.itinerary.type.should.equal('Wanted');
@@ -202,6 +279,22 @@ describe('Routes', function() {
     });
 
     describe('DEL', function() {
+
+      it('should 404 reject an unknown user account', function (done) {
+        request(server)
+          .del('/rideshares/' + rideshare._id)
+          .set('Accept', 'application/vnd.api+json')
+          .set('Authorization', 'Bearer ' + jwt3)
+          .expect(404)
+          .end(function (err, res) {
+            if (err) {
+              should.not.exist(err);
+              return done(err);
+            }
+            res.text.should.match(/{"errors":\[{"code":"not_found"/);
+            done();
+          });
+      });
 
       it('should 401 reject non owner delete rideshare request', function (done) {
         request(server)
