@@ -1,8 +1,6 @@
 'use strict';
 
-var should = require('chai').should(),
-  sinon = require('sinon'),
-  lynx = require('lynx');
+var should = require('chai').should();
 
 var timing = require('./timing');
 
