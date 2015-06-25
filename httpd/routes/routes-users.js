@@ -6,17 +6,23 @@ var config = require('./../../config/app'),
 
 module.exports = function (router) {
 
-  router.get('/users/:id', auth(), function *() {
+  router
+    .param('id', function *(id, next) {
+      if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+        return this.status = 404;
+      }
+      yield next;
+    })
+    .get('/users/:id', auth(), function *() {
 
-    try {
-      var user = yield usersController.findById(this.params.id);
-      this.body = user;
-    }
-    catch (e) {
-      //console.log('e', e);
-      this.throw(e.status, {message: {errors: e.errors}});
-    }
+      try {
+        this.body = yield usersController.findById(this.params.id);
+      }
+      catch (e) {
+        //console.log('e', e);
+        this.throw(e.status, {message: {errors: e.errors}});
+      }
 
-  });
+    });
 
 };

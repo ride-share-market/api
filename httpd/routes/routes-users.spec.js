@@ -69,20 +69,16 @@ describe('Routes', function () {
           done();
         });
 
-        it('should 400 reject non-valid userID parameter', function (done) {
+        it('should 404 reject non-valid userID parameter', function (done) {
           request(server)
             .get('/users/abc123')
             .set('Authorization', 'Bearer ' + jwt)
-            .expect(400)
+            .expect(404)
             .end(function (err, res) {
               if (err) {
                 return done(err);
               }
-
-              assert.isArray(res.body.errors, 'Top level response property should be an Array');
-              res.body.errors[0].code.should.equal('invalid_format');
-              res.body.errors[0].title.should.equal('Invalid user ID format.');
-
+              res.text.should.match(/not\ found/i);
               done();
             });
         });
