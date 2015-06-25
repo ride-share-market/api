@@ -123,6 +123,22 @@ describe('Routes', function() {
 
     describe('GET', function() {
 
+      it('should 404 rideshares/:id invalid :id', function (done) {
+        request(server)
+          .get('/rideshares/abc123')
+          .set('Accept', 'application/vnd.api+json')
+          .expect(404)
+          .end(function (err, res) {
+            if (err) {
+              should.not.exist(err);
+              return done(err);
+            }
+            res.text.should.match(/not\ found/i);
+            done();
+
+          });
+      });
+
       it('should 200 rideshares/:id', function (done) {
         request(server)
           .get('/rideshares/' + rideshare._id)
@@ -157,6 +173,22 @@ describe('Routes', function() {
           });
       });
 
+      it('should 404 rideshares/:id unknown :id', function (done) {
+        request(server)
+          .get('/rideshares/553928038122fd0d0024bd11')
+          .set('Accept', 'application/vnd.api+json')
+          .expect(404)
+          .end(function (err, res) {
+            if (err) {
+              should.not.exist(err);
+              return done(err);
+            }
+            res.text.should.match(/{"errors":\[{"code":"not_found","title":"/);
+            done();
+
+          });
+      });
+
       it('should 503 handle rideshares errors', function (done) {
 
         sinon.stub(rpcPublisher, 'publish', function () {
@@ -178,22 +210,6 @@ describe('Routes', function() {
             }
             res.text.should.match(/{"errors":\[{"code":"service_unavailable","title":"Service\ Unavailable"}\]}/);
             done();
-          });
-      });
-
-      it('should 404 rideshares/:id', function (done) {
-        request(server)
-          .get('/rideshares/553928038122fd0d0024bd11')
-          .set('Accept', 'application/vnd.api+json')
-          .expect(404)
-          .end(function (err, res) {
-            if (err) {
-              should.not.exist(err);
-              return done(err);
-            }
-            res.text.should.match(/{"errors":\[{"code":"not_found","title":"/);
-            done();
-
           });
       });
 

@@ -43,7 +43,8 @@ module.exports = function (router) {
   router
     .param('id', function *(id, next) {
       if (!id.match(/^[0-9a-fA-F]{24}$/)) {
-        return this.status = 404;
+        this.status = 404;
+        return;
       }
       yield next;
     })

@@ -1,6 +1,5 @@
 'use strict';
 
-//require('co-mocha');
 var http = require('http'),
   request = require('supertest'),
   should = require('chai').should(),
@@ -51,11 +50,9 @@ describe('Routes', function () {
                 should.not.exist(err);
                 return done(err);
               }
-
               assert.isArray(res.body.errors, 'Top level response property should be an Array');
               res.body.errors[0].code.should.equal('invalid_request');
               res.body.errors[0].title.should.equal('Authorization header not found');
-
               done();
             });
         });
@@ -69,7 +66,7 @@ describe('Routes', function () {
           done();
         });
 
-        it('should 404 reject non-valid userID parameter', function (done) {
+        it('should 404 invalid :id param', function (done) {
           request(server)
             .get('/users/abc123')
             .set('Authorization', 'Bearer ' + jwt)
@@ -79,6 +76,22 @@ describe('Routes', function () {
                 return done(err);
               }
               res.text.should.match(/not\ found/i);
+              done();
+            });
+        });
+
+        it('should 404 unknown :id param', function (done) {
+          request(server)
+            .get('/users/458ac201041d5b0452c8447e')
+            .set('Authorization', 'Bearer ' + jwt)
+            .expect(404)
+            .end(function (err, res) {
+              if (err) {
+                return done(err);
+              }
+              assert.isArray(res.body.errors, 'Top level response property should be an Array');
+              res.body.errors[0].code.should.equal('not_found');
+              res.body.errors[0].title.should.equal('Account profile not found.');
               done();
             });
         });
