@@ -50,9 +50,9 @@ exports.googleCallback = function *googleCallback(code) {
     ].join('');
 
     logger.info({
-        "action": "signin",
-        "provider": "google",
-        "token": token
+        'action': 'signin',
+        'provider': 'google',
+        'token': token
       },
       redirectUrl);
 
@@ -118,9 +118,9 @@ exports.facebookCallback = function *facebookCallback(code) {
     ].join('');
 
     logger.info({
-        "action": "signin",
-        "provider": "facebook",
-        "token": token
+        'action': 'signin',
+        'provider': 'facebook',
+        'token': token
       },
       redirectUrl);
 
