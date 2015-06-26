@@ -49,7 +49,15 @@ exports.googleCallback = function *googleCallback(code) {
       token
     ].join('');
 
+    logger.info({
+        "action": "signin",
+        "provider": "google",
+        "token": token
+      },
+      redirectUrl);
+
     metrics('controllers.auth.google.resolve', Date.now());
+
     return redirectUrl;
 
   }
@@ -109,9 +117,16 @@ exports.facebookCallback = function *facebookCallback(code) {
       token
     ].join('');
 
-    metrics('controllers.auth.resolve.resolve', Date.now());
-    return redirectUrl;
+    logger.info({
+        "action": "signin",
+        "provider": "facebook",
+        "token": token
+      },
+      redirectUrl);
 
+    metrics('controllers.auth.resolve.resolve', Date.now());
+
+    return redirectUrl;
 
   }
   catch (err) {
