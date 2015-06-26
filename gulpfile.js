@@ -82,7 +82,7 @@
     }
 
     exec('NODE_ENV=test node ./node_modules/istanbul-harmony/lib/cli.js cover node_modules/mocha/bin/_mocha ' +
-      '-x \'*spec.js\' --root httpd/ --dir test/coverage  -- -R spec ' + tests, function (err, stdout, stderr) {
+      '-x \'*spec.js\' --root httpd/ --dir test/coverage  -- -R spec --recursive ' + tests, function (err, stdout, stderr) {
       console.log(stdout);
       console.log(stderr);
       cb(err);
