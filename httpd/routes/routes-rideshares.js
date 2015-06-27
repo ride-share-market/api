@@ -68,7 +68,7 @@ module.exports = function (router) {
         var validUser = yield usersFindById(this.jwtToken.id);
 
         // Check requester is the owner of this rideshare
-        if (validUser.users._id !== this.request.body.user) {
+        if (validUser.users._id !== this.request.body.user._id) {
           this.throw(401, {
             errors: [
               {

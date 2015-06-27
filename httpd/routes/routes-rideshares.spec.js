@@ -60,7 +60,7 @@ var server = http.createServer(app.callback());
 
 describe('Routes', function() {
 
-  describe('Rideshares', function () {
+  describe.only('Rideshares', function () {
 
     afterEach(function (done) {
       if (rpcPublisher.publish.restore) {
@@ -154,6 +154,7 @@ describe('Routes', function() {
             result.rideshares.should.be.an.instanceof(Array);
             result.rideshares.length.should.equal(1);
             result.rideshares[0]._id.should.equal(rideshare._id);
+            rideshare = result.rideshares[0];
             done();
           });
       });
@@ -217,30 +218,6 @@ describe('Routes', function() {
 
     describe('PUT', function() {
 
-      it('should 401 reject update if not rideshare owner', function(done) {
-
-        request(server)
-          .put('/rideshares/' + rideshare._id)
-          .set('Accept', 'application/vnd.api+json')
-          .set('Content-Type', 'application/vnd.api+json')
-          .set('Authorization', 'Bearer ' + jwt2)
-          .send(JSON.stringify(rideshare))
-          .expect('Content-Type', /application\/vnd\.api\+json/)
-          .expect(401)
-          .end(function (err, res) {
-            if (err) {
-              return done(err);
-            }
-
-            var result = JSON.parse(res.text);
-            result.errors.should.be.an.instanceof(Array);
-            result.errors[0].code.should.equal('authorization_required');
-            result.errors[0].title.should.equal('Please sign in to complete this request.');
-            done();
-          });
-
-      });
-
       it('should 404 reject an unknown user account', function(done) {
 
         request(server)
@@ -265,6 +242,29 @@ describe('Routes', function() {
 
       });
 
+      it('should 401 reject update if not rideshare owner', function(done) {
+
+        request(server)
+          .put('/rideshares/' + rideshare._id)
+          .set('Accept', 'application/vnd.api+json')
+          .set('Content-Type', 'application/vnd.api+json')
+          .set('Authorization', 'Bearer ' + jwt2)
+          .send(JSON.stringify(rideshare))
+          .expect('Content-Type', /application\/vnd\.api\+json/)
+          .expect(401)
+          .end(function (err, res) {
+            if (err) {
+              return done(err);
+            }
+
+            var result = JSON.parse(res.text);
+            result.errors.should.be.an.instanceof(Array);
+            result.errors[0].code.should.equal('authorization_required');
+            result.errors[0].title.should.equal('Please sign in to complete this request.');
+            done();
+          });
+
+      });
 
       it('should 200 update a rideshare', function(done) {
 
