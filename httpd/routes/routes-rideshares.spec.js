@@ -60,7 +60,7 @@ var server = http.createServer(app.callback());
 
 describe('Routes', function() {
 
-  describe.only('Rideshares', function () {
+  describe('Rideshares', function () {
 
     afterEach(function (done) {
       if (rpcPublisher.publish.restore) {
