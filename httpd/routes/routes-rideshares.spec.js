@@ -14,11 +14,11 @@ var http = require('http'),
 
 var config = require('../../config/app'),
 
-  rideshareFixture = fs.readFileSync(config.get('root') + '/test/fixtures/rideshare_1.json').toString(),
+  rideshareFixture = fs.readFileSync(config.get('root') + '/test/fixtures/http_post_200_rideshare_1.json').toString(),
   jwtManager = require(config.get('root') + '/httpd/lib/jwt/jwtManager'),
 
-  user1IdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/user1_id.txt').toString(),
-  user2IdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/user2_id.txt').toString(),
+  user1IdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/valid_user_1_id.txt').toString(),
+  user2IdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/valid_user_2_id.txt').toString(),
   unknownUserIdFixture = '5530c570a59afc0d00d9cfdd',
 
   jwt = jwtManager.issueToken({name: 'Net Citizen', id: user1IdFixture}),

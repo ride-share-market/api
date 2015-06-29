@@ -9,7 +9,7 @@ var config = require('./../../../config/app'),
   usersFindById = require('./lib-users-find-by-id'),
   rpcUserFind = require(config.get('root') + '/httpd/lib/rpc/users/rpc-users-find');
 
-var userIdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/user1_id.txt').toString();
+var userIdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/valid_user_1_id.txt').toString();
 
 describe('Lib', function () {
   describe('Users', function () {

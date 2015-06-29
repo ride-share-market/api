@@ -6,7 +6,7 @@ var should = require('chai').should(),
 var config = require('../../../config/app'),
   formatUserResponse = require('./format-user-response');
 
-var userFixture = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/user_1.json').toString());
+var userFixture = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/http_get_200_user.json').toString());
 
 describe('Format User Reponse', function () {
 

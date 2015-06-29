@@ -11,8 +11,8 @@ var config = require('../../../../config/app'),
   rpcFindAllRideshares = require('./rpc-rideshares-find-all'),
   rpcRemoveRideshareById = require('./rpc-rideshares-remove-by-id');
 
-var rideshareFixture = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/rideshare_1.json').toString()),
-  userIdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/user1_id.txt').toString(),
+var rideshareFixture = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/http_post_200_rideshare_1.json').toString()),
+  userIdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/valid_user_1_id.txt').toString(),
   rideshare;
 
 rideshareFixture.user = userIdFixture;

@@ -13,7 +13,7 @@ console.log('http://' + config.get('app').hostname + ':' + config.get('app').por
 
 var apiRequest = request('http://' + config.get('app').hostname + ':' + config.get('app').port);
 
-var userIdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/user_id.txt').toString();
+var userIdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/valid_user_1_id.txt').toString();
 
 describe('Users', function () {
 
@@ -141,30 +141,20 @@ describe('Users', function () {
 
         describe('URL params validation', function () {
 
-          it('should 400 non-valid users :id', function (done) {
+          it('should 404 non-valid users :id', function (done) {
             apiRequest
               .get('/users/123')
               .set('Content-Type', 'application/vnd.api+json')
               .set('Accept', 'application/vnd.api+json')
               .set('Authorization', 'Bearer ' + jwt)
               .expect('Content-Type', /application\/vnd\.api\+json/)
-              .expect(400)
+              .expect(404)
               .end(function (err, res) {
                 if (err) {
                   return done(err);
                 }
 
-                // Test: response is a collection of objects keyed by "errors"
-                res.text.should.match(/{"errors":\[{.*}/);
-
-                // Parse response test
-                var jsonResponse = JSON.parse(res.text);
-
-                should.exist(jsonResponse.errors);
-                assert.isArray(jsonResponse.errors, 'Top level response property should be an Array');
-
-                jsonResponse.errors[0].code.should.equal('invalid_format');
-                jsonResponse.errors[0].title.should.equal('Invalid user ID format.');
+                res.text.should.match(/\{"message":"Page Not Found"\}/);
 
                 done();
               });

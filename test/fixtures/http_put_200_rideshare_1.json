@@ -1,0 +1,206 @@
+{
+  "_id": "5590c99d4f217a8d4b8effa6",
+  "itinerary": {
+    "route": [
+      {
+        "place": "Barcelona, Spain",
+        "details": {
+          "address_components": [
+            {
+              "long_name": "Barcelona",
+              "short_name": "Barcelona",
+              "types": [
+                "locality",
+                "political"
+              ]
+            },
+            {
+              "long_name": "Barcelona",
+              "short_name": "Barcelona",
+              "types": [
+                "administrative_area_level_4",
+                "political"
+              ]
+            },
+            {
+              "long_name": "El Barcelonès",
+              "short_name": "El Barcelonès",
+              "types": [
+                "administrative_area_level_3",
+                "political"
+              ]
+            },
+            {
+              "long_name": "Barcelona",
+              "short_name": "B",
+              "types": [
+                "administrative_area_level_2",
+                "political"
+              ]
+            },
+            {
+              "long_name": "Catalonia",
+              "short_name": "CT",
+              "types": [
+                "administrative_area_level_1",
+                "political"
+              ]
+            },
+            {
+              "long_name": "Spain",
+              "short_name": "ES",
+              "types": [
+                "country",
+                "political"
+              ]
+            }
+          ],
+          "adr_address": "<span class=\"locality\">Barcelona</span>, <span class=\"region\">Barcelona</span>, <span class=\"country-name\">Spain</span>",
+          "formatted_address": "Barcelona, Barcelona, Spain",
+          "geometry": {
+            "location": {
+              "A": 41.3850639,
+              "F": 2.1734034999999494
+            },
+            "viewport": {
+              "za": {
+                "A": 41.320004,
+                "j": 41.4695761
+              },
+              "ra": {
+                "j": 2.069525800000065,
+                "A": 2.228009899999961
+              }
+            }
+          },
+          "icon": "http://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png",
+          "id": "5695851cee37adbcea7305c0473a15906dbcab8f",
+          "name": "Barcelona",
+          "place_id": "ChIJ5TCOcRaYpBIRCmZHTz37sEQ",
+          "reference": "CoQBeAAAAPf6UUPbkVNeF3zQss_w0EzS1VKYDVM6Xfb3iQXDlKo8SEIkzQuJXL3lbH8DR8mPgLI0z8o4zeqsXHUfVm3qZzWauQaZVNVVobBk0kJ6mpxugc1G7LoGwcxqQBusTu0vrts691D6K2Lzj3EXC_5Y5PVh-II_KO5Sm94hJ1Wp3AsDEhDBNBEGaYijFTrefi-zXtkGGhQYNRo4rYOBxvs7Rg3AyODKryPmgg",
+          "scope": "GOOGLE",
+          "types": [
+            "locality",
+            "political"
+          ],
+          "url": "https://maps.google.com/maps/place?q=Barcelona,+Barcelona,+Spain&ftid=0x12a49816718e30e5:0x44b0fb3d4f47660a",
+          "vicinity": "Barcelona",
+          "html_attributions": []
+        }
+      },
+      {
+        "place": "Madrid, Spain",
+        "details": {
+          "address_components": [
+            {
+              "long_name": "Madrid",
+              "short_name": "Madrid",
+              "types": [
+                "locality",
+                "political"
+              ]
+            },
+            {
+              "long_name": "Madrid",
+              "short_name": "Madrid",
+              "types": [
+                "administrative_area_level_4",
+                "political"
+              ]
+            },
+            {
+              "long_name": "Área Metropolitalitana y Corredor del Henares",
+              "short_name": "Área Metropolitalitana y Corredor del Henares",
+              "types": [
+                "administrative_area_level_3",
+                "political"
+              ]
+            },
+            {
+              "long_name": "Madrid",
+              "short_name": "M",
+              "types": [
+                "administrative_area_level_2",
+                "political"
+              ]
+            },
+            {
+              "long_name": "Community of Madrid",
+              "short_name": "Community of Madrid",
+              "types": [
+                "administrative_area_level_1",
+                "political"
+              ]
+            },
+            {
+              "long_name": "Spain",
+              "short_name": "ES",
+              "types": [
+                "country",
+                "political"
+              ]
+            }
+          ],
+          "adr_address": "<span class=\"locality\">Madrid</span>, <span class=\"region\">Madrid</span>, <span class=\"country-name\">Spain</span>",
+          "formatted_address": "Madrid, Madrid, Spain",
+          "geometry": {
+            "location": {
+              "A": 40.4167754,
+              "F": -3.7037901999999576
+            },
+            "viewport": {
+              "za": {
+                "A": 40.3120639,
+                "j": 40.5638447
+              },
+              "ra": {
+                "j": -3.834161799999947,
+                "A": -3.52491150000003
+              }
+            }
+          },
+          "icon": "http://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png",
+          "id": "8e431ef5ad3b7c115999d19fe4aa09e195cae372",
+          "name": "Madrid",
+          "place_id": "ChIJgTwKgJcpQg0RaSKMYcHeNsQ",
+          "reference": "CoQBcgAAAHB_fAR_xzxkMfBiutFo46L4-Fmuq934Z8TM1lyaJgBH3qrkNvcZIxuponUOfYM4qj5npzTCoKj4atbZKDRRO9XB4ar3ABQQRn7408csUBtqJA6O0U1NWfjsE_zfXQTkBq9qebcvOBbaDfkJSqmCGkU4L8WQth3eJt5iuFBqdlCNEhB8LFseN2wt6B8BbS8-ex8iGhRB5w5WHLwsRQ1E3-9LGUdLnrFGNg",
+          "scope": "GOOGLE",
+          "types": [
+            "locality",
+            "political"
+          ],
+          "url": "https://maps.google.com/maps/place?q=Madrid,+Madrid,+Spain&ftid=0xd422997800a3c81:0xc436dec1618c2269",
+          "vicinity": "Madrid",
+          "html_attributions": []
+        }
+      }
+    ],
+    "type": "Wanted",
+    "trip": "One-way",
+    "frequency": "One time",
+    "vehicle": "Car",
+    "seats": 1,
+    "luggage": "Small Amount",
+    "shareDriving": "No",
+    "smoking": "No",
+    "currency": "€",
+    "cost": 10,
+    "comment": ""
+  },
+  "user": {
+    "_id": "558f995d626a044038fad85b",
+    "providers": [
+      {
+        "google": {
+          "displayName": "Net Citizen",
+          "url": "https://plus.google.com/103434308766179322441",
+          "image": "https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg?sz=50"
+        }
+      }
+    ]
+  },
+  "messages": [],
+  "updated_at": "2015-06-29T04:29:17.387Z",
+  "created_at": "2015-06-29T04:29:17.387Z",
+  "__v": 0
+}

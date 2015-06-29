@@ -10,7 +10,7 @@ var config = require('./../../../config/app'),
   rpcUserFind = require(config.get('root') + '/httpd/lib/rpc/users/rpc-users-find'),
   user = require('./controller-users-find');
 
-var userIdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/user1_id.txt').toString();
+var userIdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/valid_user_1_id.txt').toString();
 
 
 describe('Controllers', function () {

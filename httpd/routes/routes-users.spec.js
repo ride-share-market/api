@@ -31,7 +31,7 @@ var config = require('./../../config/app'),
 
 var server = http.createServer(app.callback());
 
-var userIdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/user1_id.txt').toString();
+var userIdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/valid_user_1_id.txt').toString();
 
 describe('Routes', function () {
 

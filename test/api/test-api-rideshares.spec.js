@@ -6,8 +6,8 @@ var request = require('supertest'),
   fs = require('fs');
 
 var config = require('../../config/app'),
-  userIdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/user_id.txt').toString(),
-  rideshareFixture = fs.readFileSync(config.get('root') + '/test/fixtures/rideshare_1.json').toString(),
+  userIdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/valid_user_1_id.txt').toString(),
+  rideshareFixture = fs.readFileSync(config.get('root') + '/test/fixtures/http_post_200_rideshare_1.json').toString(),
   jwtManager = require(config.get('root') + '/httpd/lib/jwt/jwtManager'),
   jwt = jwtManager.issueToken({name: 'Net Citizen', id: userIdFixture});
 
