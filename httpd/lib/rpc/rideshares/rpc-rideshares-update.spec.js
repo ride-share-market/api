@@ -13,7 +13,7 @@ var config = require('../../../../config/app'),
 
 var rideshareFixture = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/http_post_200_rideshare_1.json').toString()),
   userIdFixture = fs.readFileSync(config.get('root') + '/test/fixtures/valid_user_1_id.txt').toString(),
-  rideshare;
+  rideshareUpdate;
 
 rideshareFixture.user = userIdFixture;
 
@@ -23,9 +23,12 @@ describe('RPC Rideshares', function () {
 
     beforeEach(function (done) {
       rpcCreateRideshare(rideshareFixture).then(function (res) {
-        rideshare = res.result;
-        done();
-      });
+        rideshareUpdate = {
+          _id: res.result._id,
+          itinerary: res.result.itinerary
+        };
+      })
+      .then(done, done);
     });
 
     afterEach(function (done) {
@@ -36,7 +39,7 @@ describe('RPC Rideshares', function () {
     });
 
     afterEach(function (done) {
-      rpcRemoveRideshareById(rideshare._id).then(function () {
+      rpcRemoveRideshareById(rideshareUpdate._id).then(function () {
         done();
       });
     });
@@ -46,10 +49,10 @@ describe('RPC Rideshares', function () {
       should.exist(rpcUpdateRideshare);
 
       // Update a rideshare property
-      rideshare.itinerary.type.should.equal('Wanted');
-      rideshare.itinerary.type = 'Offering';
+      rideshareUpdate.itinerary.type.should.equal('Wanted');
+      rideshareUpdate.itinerary.type = 'Offering';
 
-      rpcUpdateRideshare(rideshare).then(function (res) {
+      rpcUpdateRideshare(rideshareUpdate).then(function (res) {
         res.result.itinerary.type.should.equal('Offering');
       })
         .then(done, done);
@@ -62,7 +65,7 @@ describe('RPC Rideshares', function () {
         return q.reject({code: 503, message: 'Service Unavailable'});
       });
 
-      rpcUpdateRideshare(rideshare).catch(function rpcCreateRideshareError(err) {
+      rpcUpdateRideshare(rideshareUpdate).catch(function rpcCreateRideshareError(err) {
         err.code.should.equal(503);
         err.message.should.equal('Service Unavailable');
       })

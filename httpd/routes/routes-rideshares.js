@@ -12,8 +12,6 @@ module.exports = function (router) {
 
     try {
 
-      // TODO: validate body (id, user id, itinerary etc)
-
       var validUser = yield usersFindById(this.jwtToken.id);
 
       var rideshare = this.request.body;
@@ -62,13 +60,14 @@ module.exports = function (router) {
 
       try {
 
-        // TODO: validate body (id, user id, itinerary etc)
-
-        // Check requesting user is valid
+        // 1st Check requesting user is valid
         var validUser = yield usersFindById(this.jwtToken.id);
 
-        // Check requester is the owner of this rideshare
-        if (validUser.users._id !== this.request.body.user._id) {
+        // 2nd fetch the item to be updated
+        var rideshares = yield ridesharesController.findById(this.params.id);
+
+        // 3rd validate the requester is the owner
+        if (!userPolicy.isOwner(validUser.users._id, rideshares.rideshares[0])) {
           this.throw(401, {
             errors: [
               {

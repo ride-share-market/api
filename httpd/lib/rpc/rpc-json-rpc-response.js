@@ -5,6 +5,9 @@ var assert = require('assert'),
 
 
 function camelCaseToWords(str) {
+  if(!str) {
+    return '!';
+  }
   return str.match(/^[a-z]+|[A-Z][a-z]*/g).map(function (x) {
     return x[0].toUpperCase() + x.substr(1).toLowerCase();
   }).join(' ');
@@ -20,7 +23,7 @@ function camelCaseToWords(str) {
  */
 exports.resolveSuccess = function resolveSuccess(jsonRpc) {
 
-  assert.equal(typeof (jsonRpc), 'object', 'argument \'jsonRpc\' must be an object');
+  assert.equal(typeof (jsonRpc), 'object', 'argument jsonRpc must be an object');
 
   var deferred = q.defer();
 

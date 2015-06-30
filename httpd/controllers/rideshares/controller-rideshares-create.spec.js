@@ -36,17 +36,15 @@ describe('Controllers', function () {
           return q.resolve(res.rideshares[0]._id);
         })
           .then(function (id) {
-            return ridesharesRemoveById(id);
+            ridesharesRemoveById(id);
           })
-          .then(function () {
-            done();
-          });
+          .then(done, done);
 
       });
 
       it('should handle validation errors', function (done) {
 
-        rideshareCreate({invalid: true}).catch(function (err) {
+        rideshareCreate({itinerary: {type: 'Wanted'}}).catch(function (err) {
           err.status.should.equal(400);
           assert.isArray(err.errors, 'Errors property should be an Array');
           err.errors[0].code.should.equal('validation_error');

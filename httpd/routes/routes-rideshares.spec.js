@@ -268,25 +268,30 @@ describe('Routes', function() {
 
       it('should 200 update a rideshare', function(done) {
 
-        rideshare.itinerary.type.should.equal('Wanted');
-        rideshare.itinerary.type = 'Offering';
+        var updateRideshare = {
+          _id: rideshare._id,
+          itinerary: rideshare.itinerary
+        };
+
+        updateRideshare.itinerary.type.should.equal('Wanted');
+        updateRideshare.itinerary.type = 'Offering';
 
         request(server)
-          .put('/rideshares/' + rideshare._id)
+          .put('/rideshares/' + updateRideshare._id)
           .set('Accept', 'application/vnd.api+json')
           .set('Content-Type', 'application/vnd.api+json')
           .set('Authorization', 'Bearer ' + jwt)
-          .send(JSON.stringify(rideshare))
+          .send(JSON.stringify(updateRideshare))
           .expect('Content-Type', /application\/vnd\.api\+json/)
           .expect(200)
           .end(function (err, res) {
             if (err) {
               return done(err);
             }
-
             var result = JSON.parse(res.text);
             result.rideshares.should.be.an.instanceof(Array);
             result.rideshares[0]._id.should.equal(rideshare._id);
+            result.rideshares[0].itinerary.type.should.equal('Offering');
             done();
           });
 
