@@ -69,15 +69,14 @@
         </copy>
     </target>
 
-    <target name="gulp-test" depends="copy-config">
-        <echo message="==> TODO: Fix weird node dns error when running these tests"/>
+    <target name="gulp-test-ci" depends="copy-config">
         <exec executable="${node.path}/gulp" failonerror="true">
             <env key="PATH" path="${node.path}:${env.PATH}"/>
-            <arg value="test"/>
+            <arg value="test-ci"/>
         </exec>
     </target>
 
-    <target name="gulp-lint" depends="gulp-test">
+    <target name="gulp-lint" depends="gulp-test-ci">
         <exec executable="${node.path}/gulp" failonerror="true">
             <env key="PATH" path="${node.path}:${env.PATH}"/>
             <arg value="lint"/>

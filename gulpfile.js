@@ -89,6 +89,16 @@
     });
   });
 
+  gulp.task('test-ci', function (cb) {
+
+    exec('NODE_ENV=test-ci node ./node_modules/istanbul-harmony/lib/cli.js cover node_modules/mocha/bin/_mocha ' +
+      '-x \'*spec.js\' --root httpd/ --dir test/coverage  -- -R spec --recursive \'httpd/**/*.js\'', function (err, stdout, stderr) {
+      console.log(stdout);
+      console.log(stderr);
+      cb(err);
+    });
+  });
+
   gulp.task('docs', function () {
 
     gulp.src('./httpd/**/*.js')
