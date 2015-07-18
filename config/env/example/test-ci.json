@@ -1,13 +1,13 @@
 {
   "app": {
-    "hostname": "api01.dev.loc.ridesharemarket.com",
-    "port": 3001
+    "hostname": "127.0.0.1",
+    "port": "3001"
   },
   "messageQueue": {
     "rabbitmq": {
       "user": "rsm",
       "password": "CHANGE_ME",
-      "url": "192.168.33.10",
+      "url": "127.0.0.1",
       "vhost": "/rsm"
     }
   },
@@ -25,16 +25,22 @@
     },
     "providers": {
       "google": {
-        "clientId": "1015978829909-djc2ljfme5r4mnqd4co380mnmn89afpm.apps.googleusercontent.com",
-        "clientSecret": "-a9Q66krwOpLa8yrcsGHpoym",
+        "clientId": "CHANGE_ME",
+        "clientSecret": "CHANGE_ME",
         "redirectPath": "/auth/google/callback"
       },
       "facebook": {
-        "appId": "1554247134804120",
-        "appSecret": "0175b738f7d0aedb1a039e08da12e83b",
-        "appNamespace": "rsmwebapp",
-        "redirectUri": "/login/callback"
+        "appId": "CHANGE_ME",
+        "appSecret": "CHANGE_ME",
+        "appNamespace": "CHANGE_ME",
+        "redirectUri": "/auth/facebook/callback",
+        "url": "https://www.facebook.com/dialog/oauth",
+        "scope": "public_profile,email"
       }
     }
+  },
+  "metrics": {
+    "host": "met01.dev.vbx.ridesharemarket.com",
+    "port": 8125
   }
 }

@@ -1,0 +1,46 @@
+{
+  "app": {
+    "hostname": "api.prd.ams.ridesharemarket.com",
+    "port": 3001
+  },
+  "messageQueue": {
+    "rabbitmq": {
+      "user": "rsm",
+      "password": "CHANGE_ME",
+      "url": "lan.rmq01.prd.ams.ridesharemarket.com",
+      "vhost": "/rsm"
+    }
+  },
+  "jwtTokenSecret": "W32Ok$2@CHANGE_ME%vREA",
+  "oauth": {
+    "protocol": "https://",
+    "redirectUrl": {
+      "location": "api.ridesharemarket.com"
+    },
+    "success": {
+      "location": "ridesharemarket.com/#!/welcome"
+    },
+    "error": {
+      "location": "ridesharemarket.com/#!/error"
+    },
+    "providers": {
+      "google": {
+        "clientId": "CHANGE_ME",
+        "clientSecret": "-CHANGE_ME",
+        "redirectPath": "/auth/google/callback"
+      },
+      "facebook": {
+        "appId": "CHANGE_ME",
+        "appSecret": "CHANGE_ME",
+        "appNamespace": "CHANGE_ME",
+        "redirectUri": "/auth/facebook/callback",
+        "url": "https://www.facebook.com/dialog/oauth",
+        "scope": "public_profile,email"
+      }
+    }
+  },
+  "metrics": {
+    "host": "metrics.ridesharemarket.com",
+    "port": 8125
+  }
+}
