@@ -1,12 +1,14 @@
-# Ride Share Market API
+# Ride Share Market - HTTP API
 
-This is a Node.js HTTP API application.
+[Ride Share Market](https://ridesharemarket.com) - Free, accessible and open source Ride Sharing.
 
-This HTTP API layer for ridesharemarket.com sits between the [DATA](https://github.com/rudijs/ride-share-market-data) and APP applications.
+This git repository is the HTTP API for [ridesharemarket.com](https://ridesharemarket.com).
+
+This HTTP API layer for [ridesharemarket.com](https://ridesharemarket.com) uses JSON-RPC with [ride-share-market/data](https://github.com/ride-share-market/data) for database access.
 
 ## Overview
 
-This API should adhere to the [JSON API specification](http://jsonapi.org).
+This HTTP API should adhere to the [JSON API specification](http://jsonapi.org).
 
 JSON API requires use of the JSON API media type (application/vnd.api+json) for exchanging data for all requests.
 
@@ -25,7 +27,7 @@ An error response may have one or more error objects with these properties:
 
 ## Install
 
-- `git clone git@github.com:rudijs/ride-share-market-api.git`
+- `git clone git@github.com:ride-share-market/api.git`
 - `cd ride-share-market-api && git checkout develop`
 - `npm install`
 
@@ -77,14 +79,14 @@ Build and run docker container locally.
 - `cd ride-share-market-api`
 - `mkdir -p "$(pwd)/tmp/log"`
 - `sudo chown rsm-data "$(pwd)/tmp/log"`
-- `sudo docker run -d --name rsm-api -v $(pwd)/tmp/log/:/srv/ride-share-market-api/log -p 3001:3001 -t rudijs/rsm-api:0.0.1`
+- `sudo docker run -d --name rsm-api -v $(pwd)/tmp/log/:/srv/ride-share-market-api/log -p 3001:3001 -t ride-share-market/rsm-api:0.0.1`
 
 Build docker image locally, tag it, push it to the private docker registry.
 - `./docker-build.sh x.x.x`
 
 Deploy on remote server.
-- `sudo docker pull 192.168.33.10:5000/rudijs/rsm-api:x.x.x`
-- `sudo docker rm -f -v rsm-api && sudo docker run -d --restart always --name rsm-api --cap-add SYS_PTRACE --security-opt apparmor:unconfined -p 3001:3001 192.168.33.10:5000/rudijs/rsm-api:x.x.x`
+- `sudo docker pull 192.168.33.10:5000/ride-share-market/rsm-api:x.x.x`
+- `sudo docker rm -f -v rsm-api && sudo docker run -d --restart always --name rsm-api --cap-add SYS_PTRACE --security-opt apparmor:unconfined -p 3001:3001 192.168.33.10:5000/ride-share-market/rsm-api:x.x.x`
 - Note: the *--cap-add SYS_PTRACE --security-opt apparmor:unconfined* flags above are required for pm2. See [here](https://github.com/Unitech/PM2/issues/1086)
 - Note: the docker container will export the application directory as a docker volume.
 - This data-volume is used by other containers (eg. logstash, nginx).
