@@ -4,10 +4,7 @@ var assert = require('assert');
 
 var config = require('./../../../config/app'),
   logger = require(config.get('root') + '/config/log'),
-
-  getAccessToken = require('oauth2-linkedin').getAccessToken,
-  getProfile = require('oauth2-linkedin').getProfile,
-
+  oauth2LinkedIn = require('oauth2-linkedin'),
   rpcUserSignIn = require(config.get('root') + '/httpd/lib/rpc/users/rpc-users-signin'),
   jwtManager = require(config.get('root') + '/httpd/lib/jwt/jwtManager'),
   timing = require(config.get('root') + '/httpd/lib/metrics/timing');
@@ -40,27 +37,20 @@ exports.linkedinCallback = function *linkedinCallback(code) {
     }
   };
 
-  console.log(oauthConfig);
-  console.log(code);
-
   try {
 
     // 1
     // Perform Oauth steps
-    var oAuthAccessToken = yield getAccessToken(oauthConfig, logger.error, code);
-    console.log(oAuthAccessToken);
-    var oAuthUserProfile = yield getProfile(logger.error, oAuthAccessToken.access_token);
-    console.log(oAuthUserProfile);
+    var oAuthAccessToken = yield oauth2LinkedIn.getAccessToken(oauthConfig, logger.error.bind(logger), code);
+    var oAuthUserProfile = yield oauth2LinkedIn.getProfile(logger.error.bind(logger), oAuthAccessToken.access_token);
 
     // 2
     // Add/Update database
     var signedInUser = yield rpcUserSignIn('linkedin', oAuthUserProfile);
-    console.log('signedInUser', signedInUser);
 
     // 3
     // Generate JWT token
     var token = jwtManager.issueToken({
-      //name: signedInUser.providers[signedInUser.currentProvider].name.givenName,
       name: signedInUser.providers[signedInUser.currentProvider].name,
       id: signedInUser._id
     });
@@ -86,9 +76,8 @@ exports.linkedinCallback = function *linkedinCallback(code) {
   }
   catch (err) {
 
-    console.log('err', err);
-
     logger.error(err);
+
     metrics('controllers.auth.linkedin.error', Date.now());
 
     // RPC Error
