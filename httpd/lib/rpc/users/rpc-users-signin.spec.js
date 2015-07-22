@@ -2,11 +2,17 @@
 
 var should = require('chai').should(),
   sinon = require('sinon'),
-  q = require('q');
+  q = require('q'),
+  fs = require('fs'),
+  path = require('path');
 
 var config = require('../../../../config/app'),
   rpcPublisher = require(config.get('root') + '/httpd/lib/rpc/rpc-publisher'),
   rpcUserSignIn = require('./rpc-users-signin');
+
+var googleUserProfile = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/oauth/google-user-profile.json').toString()),
+  facebookUserProfile = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/oauth/facebook-user-profile.json').toString()),
+  linkedUserProfile = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/oauth/linkedin-user-profile.json').toString());
 
 describe('RPC User Sign In', function () {
 
@@ -17,12 +23,7 @@ describe('RPC User Sign In', function () {
     done();
   });
 
-  describe('Google Oauth', function () {
-
-    var user = {
-      emails: [{value: 'net@citizen.com'}],
-      googlePlus: 'profile-data-here'
-    };
+  describe('Google', function () {
 
     it('should publish a JSON-RPC user.signin message and return the result', function (done) {
 
@@ -38,7 +39,7 @@ describe('RPC User Sign In', function () {
 
         var result = JSON.stringify({
             result: {
-              email: user.emails[0].value
+              email: googleUserProfile.emails[0].value
             }
           }
         );
@@ -46,8 +47,8 @@ describe('RPC User Sign In', function () {
         return q.resolve(result);
       });
 
-      rpcUserSignIn('google', user).then(function rpcUserSignInSuccess(res) {
-        res.email.should.equal(user.emails[0].value);
+      rpcUserSignIn('google', googleUserProfile).then(function rpcUserSignInSuccess(res) {
+        res.email.should.equal(googleUserProfile.emails[0].value);
       })
         .then(done, done);
 
@@ -59,7 +60,7 @@ describe('RPC User Sign In', function () {
         return q.reject({code: 500, message: 'Service Unavailable'});
       });
 
-      rpcUserSignIn('google', user).catch(function rpcUserSignInError(err) {
+      rpcUserSignIn('google', googleUserProfile).catch(function rpcUserSignInError(err) {
         err.code.should.equal(500);
         err.message.should.equal('Service Unavailable');
       })
@@ -68,37 +69,16 @@ describe('RPC User Sign In', function () {
 
   });
 
-  describe('FaceBook Oauth', function () {
-
-    var user = {
-      id: '1601459773473363',
-      email: 'net@citizen.com',
-      first_name: 'Net',
-      gender: 'male',
-      last_name: 'Citizen',
-      link: 'https://www.facebook.com/app_scoped_user_id/1601459773473363/',
-      locale: 'en_US',
-      name: 'Net Citizen',
-      timezone: 8,
-      updated_time: '2015-05-28T15:48:57+0000',
-      verified: true
-    };
+  describe('FaceBook', function () {
 
     it('should publish a JSON-RPC user.signin message and return the result', function (done) {
-
-      should.exist(rpcUserSignIn);
 
       sinon.stub(rpcPublisher, 'publish', function (json) {
         var jsonRpc = JSON.parse(json);
 
-        jsonRpc.jsonrpc.should.equal('2.0');
-        (typeof (jsonRpc.id)).should.be.a('string');
-        jsonRpc.method.should.equal('user.signIn');
-        jsonRpc.params.should.be.an('object');
-
         var result = JSON.stringify({
             result: {
-              email: user.email
+              email: facebookUserProfile.email
             }
           }
         );
@@ -106,8 +86,35 @@ describe('RPC User Sign In', function () {
         return q.resolve(result);
       });
 
-      rpcUserSignIn('facebook', user).then(function rpcUserSignInSuccess(res) {
-        res.email.should.equal(user.email);
+      rpcUserSignIn('facebook', facebookUserProfile).then(function rpcUserSignInSuccess(res) {
+        res.email.should.equal(facebookUserProfile.email);
+      })
+        .then(done, done);
+
+    });
+
+  });
+
+  describe('LinkedIn', function () {
+
+    it('should publish a JSON-RPC user.signin message and return the result', function (done) {
+
+      sinon.stub(rpcPublisher, 'publish', function (json) {
+
+        var jsonRpc = JSON.parse(json);
+
+        var result = JSON.stringify({
+            result: {
+              email: linkedUserProfile.emailAddress
+            }
+          }
+        );
+
+        return q.resolve(result);
+      });
+
+      rpcUserSignIn('linkedin', linkedUserProfile).then(function rpcUserSignInSuccess(res) {
+        res.email.should.equal(linkedUserProfile.emailAddress);
       })
         .then(done, done);
 

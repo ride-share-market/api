@@ -42,6 +42,14 @@
         "first_name": "net",
         "email": "net@citizen.com",
         "id": "265849783331351"
+      },
+      "linkedin": {
+        "emailAddress": "net@citizen.com",
+        "firstName": "Net",
+        "id": "dxHVSiPxzw",
+        "lastName": "Citizen",
+        "pictureUrl": "https://media.licdn.com/mpr/mprx/0_1_0WcXxm2XeGM4LOy-LWpGMm7XZ_JI9fx-FWlrG7W5KGyUcYJ-bWpGMmIPXGJVECx-bF0vVahPBC079CJrVv0rBG5PBi07PG0rVEqACfmtC7zMeYPTuXN5uOL6S1n7X1nPY5PfxC_eY",
+        "publicProfileUrl": "https://www.linkedin.com/pub/net-citizen/60/42/b30"
       }
     },
     "__v": 0

@@ -31,7 +31,15 @@ module.exports = function (obj) {
         url: providers.facebook.link,
         image: 'https://graph.facebook.com/' + providers.facebook.id + '/picture'
       };
+    },
+    linkedin: function (providers) {
+      return {
+        displayName: providers.linkedin.name,
+        url: providers.linkedin.publicProfileUrl,
+        image: providers.linkedin.pictureUrl
+      };
     }
+
 
   };
 

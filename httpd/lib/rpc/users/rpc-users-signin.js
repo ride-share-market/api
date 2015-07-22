@@ -9,17 +9,10 @@ var config = require('../../../../config/app'),
 
 module.exports = function rpcUserSignIn(provider, oAuthUser) {
 
-  assert.equal(typeof (provider), 'string', 'argument \'provider\' must be a string');
-  assert.equal(typeof (oAuthUser), 'object', 'argument \'oAuthUser\' must be an object');
+  assert.equal(typeof (provider), 'string', 'argument provider must be a string');
+  assert.equal(typeof (oAuthUser), 'object', 'argument oAuthUser must be an object');
 
   var deferred = q.defer();
-
-  // Currently Google Plus only
-  //var user = {
-  //  email: oAuthUser.emails[0].value,
-  //  provider: provider,
-  //  profile: oAuthUser
-  //};
 
   var userFilter = {
     google: function(oAuthUser) {
@@ -35,8 +28,16 @@ module.exports = function rpcUserSignIn(provider, oAuthUser) {
         provider: provider,
         profile: oAuthUser
       };
+    },
+    linkedin: function(oAuthUser) {
+      var userProfile = {
+        email: oAuthUser.emailAddress,
+        provider: provider,
+        profile: oAuthUser
+      };
+      userProfile.profile.name = oAuthUser.firstName + ' ' + oAuthUser.lastName;
+      return userProfile;
     }
-
   };
 
   var user = userFilter[provider](oAuthUser);

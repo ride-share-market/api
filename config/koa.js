@@ -68,7 +68,9 @@ module.exports = function (app) {
     'signin\/google',
     'auth\/google\/callback',
     'signin\/facebook',
-    'auth\/facebook\/callback'
+    'auth\/facebook\/callback',
+    'signin\/linkedin',
+    'auth\/linkedin\/callback'
   ]}));
 
   app.use(compress());
