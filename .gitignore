@@ -2,3 +2,4 @@
 node_modules/
 test/coverage/
 config/env/*.json
+test/fixtures/valid_user_*_id.txt
