@@ -3,8 +3,7 @@
 var should = require('chai').should(),
   sinon = require('sinon'),
   q = require('q'),
-  fs = require('fs'),
-  path = require('path');
+  fs = require('fs');
 
 var config = require('../../../../config/app'),
   rpcPublisher = require(config.get('root') + '/httpd/lib/rpc/rpc-publisher'),
@@ -73,16 +72,13 @@ describe('RPC User Sign In', function () {
 
     it('should publish a JSON-RPC user.signin message and return the result', function (done) {
 
-      sinon.stub(rpcPublisher, 'publish', function (json) {
-        var jsonRpc = JSON.parse(json);
-
+      sinon.stub(rpcPublisher, 'publish', function () {
         var result = JSON.stringify({
             result: {
               email: facebookUserProfile.email
             }
           }
         );
-
         return q.resolve(result);
       });
 
@@ -99,17 +95,13 @@ describe('RPC User Sign In', function () {
 
     it('should publish a JSON-RPC user.signin message and return the result', function (done) {
 
-      sinon.stub(rpcPublisher, 'publish', function (json) {
-
-        var jsonRpc = JSON.parse(json);
-
+      sinon.stub(rpcPublisher, 'publish', function () {
         var result = JSON.stringify({
             result: {
               email: linkedUserProfile.emailAddress
             }
           }
         );
-
         return q.resolve(result);
       });
 
