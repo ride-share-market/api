@@ -14,6 +14,7 @@
   "jwtTokenSecret": "W32Ok$2@CHANGE_ME%vREA",
   "oauth": {
     "protocol": "https://",
+    "host": "api.dev.loc.ridesharemarket.com:3001",
     "redirectUrl": {
       "location": "api.ridesharemarket.com"
     },
