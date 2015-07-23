@@ -5,6 +5,8 @@
 
     <property name="config.src" value="/home/ubuntu/config/api/config/env"/>
 
+    <property name="test.fixtures" value="/home/ubuntu/text/fixtures"/>
+
     <property name="node.version" value="1.5.1"/>
 
     <property name="node.src" value="/var/lib/jenkins/tmp"/>
@@ -69,7 +71,16 @@
         </copy>
     </target>
 
-    <target name="gulp-test-ci" depends="copy-config">
+    <target name="copy-test-fixtures" depends="copy-config">
+        <copy todir="test/fixtures" overwrite="true" verbose="true">
+            <resources>
+                <file file="${test.fixtures}/valid_user_1_id.txt"/>
+                <file file="${test.fixtures}/valid_user_2_id.txt"/>
+            </resources>
+        </copy>
+    </target>
+
+    <target name="gulp-test-ci" depends="copy-test-fixtures">
         <exec executable="${node.path}/gulp" failonerror="true">
             <env key="PATH" path="${node.path}:${env.PATH}"/>
             <arg value="test-ci"/>
