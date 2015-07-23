@@ -1,6 +1,9 @@
 FROM ride-share-market/rsm-iojs:1.1.0
 MAINTAINER Ride Share Market "systemsadmin@ridesharemarket.com"
 
+# Git currently required for non-NPM registry modules
+RUN apt-get install git-core
+
 # NPM package cache
 COPY package.json /tmp/package.json
 RUN \
