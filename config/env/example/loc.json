@@ -26,15 +26,23 @@
     },
     "providers": {
       "google": {
-        "clientId": "1015978829909-djc2ljfme5r4mnqd4co380mnmn89afpm.apps.googleusercontent.com",
-        "clientSecret": "-a9Q66krwOpLa8yrcsGHpoym",
+        "clientId": "CHANGE_ME",
+        "clientSecret": "CHANGE_ME",
         "redirectPath": "/auth/google/callback"
       },
       "facebook": {
-        "appId": "1554247134804120",
-        "appSecret": "0175b738f7d0aedb1a039e08da12e83b",
+        "appId": "CHANGE_ME",
+        "appSecret": "CHANGE_ME",
         "appNamespace": "rsmwebapp",
-        "redirectUri": "/login/callback"
+        "redirectUri": "/auth/facebook/callback",
+        "url": "https://www.facebook.com/dialog/oauth",
+        "scope": "public_profile,email"
+      },
+      "linkedin": {
+        "clientId": "CHANGE_ME",
+        "clientSecret": "CHANGE_ME",
+        "redirectUri": "/auth/linkedin/callback",
+        "url": "https://www.linkedin.com/uas/oauth2/authorization"
       }
     }
   }

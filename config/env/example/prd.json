@@ -14,7 +14,7 @@
   "jwtTokenSecret": "W32Ok$2@CHANGE_ME%vREA",
   "oauth": {
     "protocol": "https://",
-    "host": "api.dev.loc.ridesharemarket.com:3001",
+    "host": "api.ridesharemarket.com",
     "redirectUrl": {
       "location": "api.ridesharemarket.com"
     },
@@ -27,16 +27,22 @@
     "providers": {
       "google": {
         "clientId": "CHANGE_ME",
-        "clientSecret": "-CHANGE_ME",
+        "clientSecret": "CHANGE_ME",
         "redirectPath": "/auth/google/callback"
       },
       "facebook": {
         "appId": "CHANGE_ME",
         "appSecret": "CHANGE_ME",
-        "appNamespace": "CHANGE_ME",
+        "appNamespace": "rsmwebapp",
         "redirectUri": "/auth/facebook/callback",
         "url": "https://www.facebook.com/dialog/oauth",
         "scope": "public_profile,email"
+      },
+      "linkedin": {
+        "clientId": "CHANGE_ME",
+        "clientSecret": "CHANGE_ME",
+        "redirectUri": "/auth/linkedin/callback",
+        "url": "https://www.linkedin.com/uas/oauth2/authorization"
       }
     }
   },

@@ -28,13 +28,20 @@
       "google": {
         "clientId": "CHANGE_ME",
         "clientSecret": "CHANGE_ME",
-        "redirectPath": "CHANGE_ME"
+        "redirectPath": "/auth/google/callback"
       },
       "facebook": {
         "appId": "CHANGE_ME",
         "appSecret": "CHANGE_ME",
-        "appNamespace": "CHANGE_ME",
-        "redirectUri": "CHANGE_ME"
+        "appNamespace": "rsmwebapp",
+        "redirectUri": "/auth/facebook/callback",
+        "url": "https://www.facebook.com/dialog/oauth",
+        "scope": "public_profile,email"
+      },
+      "linkedin": {
+        "clientId": "CHANGE_ME",
+        "clientSecret": "CHANGE_ME",
+        "redirectUri": "/auth/linkedin/callback"
       }
     }
   }
