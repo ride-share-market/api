@@ -4,7 +4,7 @@ MAINTAINER Ride Share Market "systemsadmin@ridesharemarket.com"
 # Git currently required for non-NPM registry modules
 RUN \
     apt-get -yqq update && \
-    apt-get install git-core && \
+    apt-get install git-core -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
