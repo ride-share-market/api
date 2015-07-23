@@ -19,9 +19,10 @@ var config = require('./../../../config/app'),
  * @param code Linkedin Oauth code
  * @returns {string} URL - redirect to app URL
  */
-exports.linkedinCallback = function *linkedinCallback(code) {
+exports.linkedinCallback = function *linkedinCallback(code, state) {
 
   assert.equal(typeof (code), 'string', 'argument code must be a string');
+  assert.equal(typeof (state), 'string', 'argument state must be a string');
 
   var metrics = timing(Date.now());
 
@@ -38,6 +39,8 @@ exports.linkedinCallback = function *linkedinCallback(code) {
   };
 
   try {
+
+    // TODO validate state, test for possible CSRF attack
 
     // 1
     // Perform Oauth steps

@@ -54,7 +54,7 @@ describe('Controllers', function () {
           });
 
           try {
-            yield authController.linkedinCallback('abc123def456');
+            yield authController.linkedinCallback('abc123def456', 'zyx789');
           }
           catch (e) {
             e.message.should.match(/failed/i);
@@ -82,7 +82,7 @@ describe('Controllers', function () {
           });
 
           try {
-            yield authController.linkedinCallback('abc123def456');
+            yield authController.linkedinCallback('abc123def456', 'xyz789');
           }
           catch (e) {
             e.name.should.equal('Error');
@@ -133,7 +133,7 @@ describe('Controllers', function () {
           });
 
           try {
-            var redirectUrl = yield authController.linkedinCallback('abc123def456');
+            var redirectUrl = yield authController.linkedinCallback('abc123def456', 'xyz789');
             redirectUrl.should.match(/.*#!\/welcome\?jwt=.*/);
           }
           catch (e) {

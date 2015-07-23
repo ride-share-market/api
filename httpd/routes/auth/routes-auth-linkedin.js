@@ -20,7 +20,11 @@ module.exports = function (router) {
       }
     };
 
-    this.redirect(linkedinSignInUrl(oauthConfig));
+    var oauthUrlState = linkedinSignInUrl(oauthConfig);
+
+    // TODO save oauthUrlState.state for possible CSRF attack prevention
+
+    this.redirect(oauthUrlState.signInUrl);
 
     yield next;
 
@@ -42,8 +46,8 @@ module.exports = function (router) {
         ].join('');
 
       }
-      else if (this.query.code) {
-        redirectUrl = yield authController.linkedinCallback(this.query.code);
+      else if (this.query.code && this.query.state) {
+        redirectUrl = yield authController.linkedinCallback(this.query.code, this.query.state);
       }
       else {
 

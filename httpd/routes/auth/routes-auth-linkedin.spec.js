@@ -87,7 +87,7 @@ describe('Routes', function () {
           });
 
           request(server)
-            .get('/auth/linkedin/callback?code=abc123')
+            .get('/auth/linkedin/callback?code=abc123&state=def456')
             .expect(302)
             .end(function (err, res) {
               if (err) {
