@@ -39,10 +39,16 @@ An error response may have one or more error objects with these properties:
     - On the MongoDB server:
     - `mongo rsm-dev`
     - `db.users.insert({"email": "net@citizen.com","currentProvider": "google","providers": {"google": {"displayName": "Net Citizen","url": "https://plus.google.com/103434308786179622443","image": {"url": "https://lh3.googleusercontent.com/photo.jpg?sz=50","isDefault": true}}}})`
-    - Copy the _id from the new user into this new file `test/fixtures/user_id.txt`
     - `db.users.insert({"email": "web@citizen.com","currentProvider": "google","providers": {"google": {"displayName": "Web Citizen","url": "https://plus.google.com/103434308786179622444","image": {"url": "https://lh4.googleusercontent.com/photo.jpg?sz=50","isDefault": true}}}})`
+    - On the local developer machine:
+    - Copy the _id from the new user into this new file `test/fixtures/user_id.txt`
     - Copy the _id from the new user into this new file `test/fixtures/user2_id.txt`
     - These two new files are used (read from) for unit and integration tests.
+    - On the local VM machine copy in the same new user _id values (local and vbx share same mongodb):
+    - `sudo -u ubuntu mkdir -p test/fixtures`
+    - `sudo -u ubuntu vi test/fixtures/valid_user_1_id.txt`
+    - `sudo -u ubuntu vi test/fixtures/valid_user_2_id.txt`  
+    
 
 ## Gulp Tasks
 
