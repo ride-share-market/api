@@ -10,11 +10,10 @@ var config = require('../../../../config/app'),
 
 describe('RPC User Find', function () {
 
-  afterEach(function(done) {
+  afterEach(function() {
     if(rpcPublisher.publish.restore) {
       rpcPublisher.publish.restore();
     }
-    done();
   });
 
   describe('Find By ID', function () {

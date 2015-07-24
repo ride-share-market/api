@@ -14,11 +14,10 @@ describe('Controllers', function () {
 
     describe('Remove By ID', function () {
 
-      afterEach(function (done) {
+      afterEach(function () {
         if (rpcPublisher.publish.restore) {
           rpcPublisher.publish.restore();
         }
-        done();
       });
 
       it('should return 404 for an unknown Rideshare', function (done) {

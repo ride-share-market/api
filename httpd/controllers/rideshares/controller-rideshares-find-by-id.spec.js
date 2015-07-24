@@ -18,11 +18,10 @@ describe('Controllers', function () {
 
     describe('Find By ID', function () {
 
-      afterEach(function (done) {
+      afterEach(function () {
         if (rpcPublisher.publish.restore) {
           rpcPublisher.publish.restore();
         }
-        done();
       });
 
       it('should return an array with one Rideshare', function (done) {

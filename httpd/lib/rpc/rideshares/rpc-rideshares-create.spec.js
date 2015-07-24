@@ -19,11 +19,10 @@ describe('RPC Rideshares', function () {
 
   describe('Create', function () {
 
-    afterEach(function (done) {
+    afterEach(function () {
       if (rpcPublisher.publish.restore) {
         rpcPublisher.publish.restore();
       }
-      done();
     });
 
     it('should create a new rideshare', function (done) {

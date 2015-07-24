@@ -21,11 +21,10 @@ describe('Controllers', function () {
 
     describe('Update', function () {
 
-      afterEach(function (done) {
+      afterEach(function () {
         if (rpcPublisher.publish.restore) {
           rpcPublisher.publish.restore();
         }
-        done();
       });
 
       it('should return a Rideshares JSON-RPC response', function (done) {

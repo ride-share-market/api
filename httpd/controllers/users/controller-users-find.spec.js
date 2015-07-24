@@ -19,11 +19,10 @@ describe('Controllers', function () {
 
     describe('Find By ID', function () {
 
-      afterEach(function (done) {
+      afterEach(function () {
         if (rpcUserFind.findById.restore) {
           rpcUserFind.findById.restore();
         }
-        done();
       });
 
       it('should reject invalid user ID', function (done) {

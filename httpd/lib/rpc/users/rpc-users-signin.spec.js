@@ -15,11 +15,10 @@ var googleUserProfile = JSON.parse(fs.readFileSync(config.get('root') + '/test/f
 
 describe('RPC User Sign In', function () {
 
-  afterEach(function (done) {
+  afterEach(function () {
     if (rpcPublisher.publish.restore) {
       rpcPublisher.publish.restore();
     }
-    done();
   });
 
   describe('Google', function () {

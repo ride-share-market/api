@@ -23,8 +23,7 @@ describe('Oauth', function () {
 
   describe('Google', function () {
 
-    afterEach(function (done) {
-
+    afterEach(function () {
       // Restore sinon stubs
       if (OAuth2.prototype.getToken.restore) {
         OAuth2.prototype.getToken.restore();
@@ -32,7 +31,6 @@ describe('Oauth', function () {
       if (google.plus.restore) {
         google.plus.restore();
       }
-      done();
     });
 
     describe('reject', function () {

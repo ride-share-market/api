@@ -31,11 +31,10 @@ describe('RPC Rideshares', function () {
       .then(done, done);
     });
 
-    afterEach(function (done) {
+    afterEach(function () {
       if (rpcPublisher.publish.restore) {
         rpcPublisher.publish.restore();
       }
-      done();
     });
 
     afterEach(function (done) {

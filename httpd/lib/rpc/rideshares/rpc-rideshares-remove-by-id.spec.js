@@ -27,11 +27,10 @@ describe('RPC Rideshares', function() {
       });
     });
 
-    afterEach(function (done) {
+    afterEach(function () {
       if (rpcPublisher.publish.restore) {
         rpcPublisher.publish.restore();
       }
-      done();
     });
 
     afterEach(function (done) {

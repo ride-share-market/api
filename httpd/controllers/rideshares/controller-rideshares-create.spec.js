@@ -22,11 +22,10 @@ describe('Controllers', function () {
 
     describe('Create', function () {
 
-      afterEach(function (done) {
+      afterEach(function () {
         if (rpcPublisher.publish.restore) {
           rpcPublisher.publish.restore();
         }
-        done();
       });
 
       it('should create a rideshare', function (done) {

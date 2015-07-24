@@ -17,11 +17,10 @@ describe('Controllers', function () {
 
     describe('Find All', function () {
 
-      afterEach(function (done) {
+      afterEach(function () {
         if (rpcPublisher.publish.restore) {
           rpcPublisher.publish.restore();
         }
-        done();
       });
 
       it('should return an array of Rideshares', function (done) {
