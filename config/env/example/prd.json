@@ -11,7 +11,7 @@
       "vhost": "/rsm"
     }
   },
-  "jwtTokenSecret": "W32Ok$2@CHANGE_ME%vREA",
+  "jwtTokenSecret": "CHANGE_ME",
   "oauth": {
     "protocol": "https://",
     "host": "api.ridesharemarket.com",
