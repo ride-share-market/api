@@ -45,6 +45,7 @@ exports.linkedinCallback = function *linkedinCallback(code, state) {
     // 1
     // Perform Oauth steps
     var oAuthAccessToken = yield oauth2LinkedIn.getAccessToken(oauthConfig, logger.error.bind(logger), code);
+
     var oAuthUserProfile = yield oauth2LinkedIn.getProfile(logger.error.bind(logger), oAuthAccessToken.access_token);
 
     // 2
