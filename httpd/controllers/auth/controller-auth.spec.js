@@ -7,17 +7,14 @@ var should = require('chai').should(),
   q = require('q'),
   fs = require('fs'),
   google = require('googleapis'),
-  OAuth2 = google.auth.OAuth2,
-  FB = require('fb');
+  OAuth2 = google.auth.OAuth2;
 
 var config = require('./../../../config/app'),
   authController = require('./controller-auth'),
   rpcPublisher = require(config.get('root') + '/httpd/lib/rpc/rpc-publisher');
 
 var googleAccessToken = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/oauth/google-access-token.json').toString()),
-  googleUserProfile = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/oauth/google-user-profile.json').toString()),
-  facebookAccessToken = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/oauth/facebook-access-token.json').toString()),
-  facebookUserProfile = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/oauth/facebook-user-profile.json').toString());
+  googleUserProfile = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/oauth/google-user-profile.json').toString());
 
 describe('Controllers', function () {
 
@@ -30,7 +27,7 @@ describe('Controllers', function () {
       }
     });
 
-    describe('Google', function() {
+    describe('Google', function () {
 
       afterEach(function () {
         // Restore sinon stubs
@@ -137,98 +134,6 @@ describe('Controllers', function () {
           var redirectUrl = yield authController.googleCallback('abc123');
 
           redirectUrl.should.match(/^http.*jwt=.*/);
-
-        });
-
-      });
-
-    });
-
-    describe('Facebook', function() {
-
-      afterEach(function () {
-        if (FB.api.restore) {
-          FB.api.restore();
-        }
-      });
-
-      describe('success', function() {
-
-        beforeEach(function () {
-          sinon.stub(FB, 'api', function (action, options, callback) {
-            if (action === 'oauth/access_token') {
-              callback(facebookAccessToken);
-            }
-            if (action === 'me') {
-              callback(facebookUserProfile);
-            }
-          });
-        });
-
-        it('should return a redirect URL', function *() {
-
-          // stub the database save operation with a success
-          sinon.stub(rpcPublisher, 'publish', function () {
-
-            var result = JSON.stringify({
-                result: {
-                  _id: '5530c570a59afc0d00d9cfdc',
-                  email: 'net@citizen.com',
-                  currentProvider: 'facebook',
-                  providers: {
-                    facebook: {
-                      name: 'Net Citizen'
-                    }
-                  }
-                }
-              }
-            );
-
-            return q.resolve(result);
-          });
-
-          var redirectUrl = yield authController.facebookCallback('abc123');
-
-          redirectUrl.should.match(/^http.*jwt=.*/);
-
-        });
-
-        it('should handle database errors', function *() {
-
-          // stub the database save operation with an error
-          sinon.stub(rpcPublisher, 'publish', function () {
-            return q.reject({code: 500, message: 'Service Unavailable'});
-          });
-
-          try {
-            yield authController.facebookCallback('abc123');
-          }
-          catch (e) {
-            e.name.should.equal('Error');
-            e.message.should.equal('Service Unavailable');
-          }
-
-        });
-
-      });
-
-      describe('error', function() {
-
-        it('should handle access_token request errors', function *() {
-
-          sinon.stub(FB, 'api', function (action, options, callback) {
-            if (action === 'oauth/access_token') {
-              callback({error: 'oauth/access_token error occurred.'});
-            }
-          });
-
-          try {
-            yield yield authController.facebookCallback('abc123');
-          }
-          catch (e) {
-            e.name.should.equal('Error');
-            e.message.should.equal('oauth/access_token error occurred.');
-          }
 
         });
 

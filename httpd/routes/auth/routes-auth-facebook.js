@@ -2,13 +2,25 @@
 
 var config = require('./../../../config/app'),
   logger = require(config.get('root') + '/config/log'),
-  facebookSignInUrl = require(config.get('root') + '/httpd/lib/oauth/lib-oauth-facebook-url')(),
+  signInUrl = require('oauth2-facebook').signInUrl,
   authController = require(config.get('root') + '/httpd/controllers/auth/controller-auth');
 
 module.exports = function (router) {
 
   router.get('/signin/facebook', function *signinFacebook(next) {
-    this.redirect(facebookSignInUrl);
+
+    var oauth = config.get('oauth'),
+      oauthConfig = {
+      appId: oauth.providers.facebook.appId,
+      redirectUrl: {
+        protocol: oauth.protocol,
+        host: oauth.host,
+        uri: oauth.providers.facebook.redirectUri
+      }
+    };
+
+    this.redirect(signInUrl(oauthConfig));
+
     yield next;
   });
 
@@ -29,8 +41,8 @@ module.exports = function (router) {
         ].join('');
 
       }
-      else if (this.query.code) {
-        redirectUrl = yield authController.facebookCallback(this.query.code);
+      else if (this.query.code && this.query.state) {
+        redirectUrl = yield authController.facebookCallback(this.query.code, this.query.state);
       }
       else {
 

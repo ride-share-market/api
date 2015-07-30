@@ -13,7 +13,7 @@ var config = require('./../../../config/app'),
 
 describe('Controllers', function () {
 
-  describe('Oauth', function () {
+  describe('Auth', function () {
 
     describe('LinkedIn', function () {
 
