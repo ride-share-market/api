@@ -4,12 +4,15 @@ require('co-mocha');
 
 var should = require('chai').should(),
   q = require('q'),
+  fs = require('fs'),
   sinon = require('sinon');
 
 var config = require('./../../../config/app'),
   authController = require('./controller-auth-linkedin'),
   oauth2LinkedIn = require('oauth2-linkedin'),
-  rpcPublisher = require(config.get('root') + '/httpd/lib/rpc/rpc-publisher');
+  rpcPublisher = require(config.get('root') + '/httpd/lib/rpc/rpc-publisher'),
+  fixtureLinkedinUserProfile = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/oauth/linkedin-user-profile.json').toString()),
+  fixtureRpcUserSignIn = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/rpc_response-rpc-user-signIn.json').toString());
 
 describe('Controllers', function () {
 
@@ -50,7 +53,7 @@ describe('Controllers', function () {
         it('should handle oauth errors', function *() {
 
           sinon.stub(oauth2LinkedIn, 'getAccessToken', function () {
-            return Promise.reject('Failed LinkedIn sign in.');
+            return q.reject('Failed LinkedIn sign in.');
           });
 
           try {
@@ -65,15 +68,11 @@ describe('Controllers', function () {
         it('should handle RPC/database errors', function *() {
 
           sinon.stub(oauth2LinkedIn, 'getAccessToken', function () {
-            return Promise.resolve({access_token: 'abc123'});
+            return q.resolve({access_token: 'abc123'});
           });
 
           sinon.stub(oauth2LinkedIn, 'getProfile', function () {
-            return Promise.resolve({
-              emailAddress: 'net@citizen.com',
-              firstName: 'Net',
-              lastName: 'Citizen'
-            });
+            return q.resolve(fixtureLinkedinUserProfile);
           });
 
           // stub the database save operation with an error
@@ -102,32 +101,13 @@ describe('Controllers', function () {
           });
 
           sinon.stub(oauth2LinkedIn, 'getProfile', function () {
-            return Promise.resolve({
-              emailAddress: 'net@citizen.com',
-              firstName: 'Net',
-              lastName: 'Citizen'
-            });
+            return q.resolve(fixtureLinkedinUserProfile);
           });
 
           // stub the database save operation with a success
           sinon.stub(rpcPublisher, 'publish', function () {
 
-            var result = JSON.stringify({
-                result: {
-                  _id: '5530c570a59afc0d00d9cfdc',
-                  email: 'net@citizen.com',
-                  currentProvider: 'linkedin',
-                  providers: {
-                    linkedin: {
-                      emailAddress: 'net@citizen.com',
-                      firstName: 'Net',
-                      lastName: 'Citizen',
-                      name:'Net Citizen'
-                    }
-                  }
-                }
-              }
-            );
+            var result = JSON.stringify(fixtureRpcUserSignIn);
 
             return q.resolve(result);
           });
