@@ -29,15 +29,16 @@ exports.facebookCallback = function *facebookCallback(code, state) {
 
     // TODO validate state
 
-    var oauthConfig = {
-      appId: 'abc123',
-      appSecret: 'secret',
-      redirectUrl: {
-        protocol: 'http://',
-        host: 'example.com',
-        uri: '/auth/facebook/callback'
-      }
-    };
+    var oauth = config.get('oauth'),
+      oauthConfig = {
+        appId: oauth.providers.facebook.appId,
+        appSecret: oauth.providers.facebook.appSecret,
+        redirectUrl: {
+          protocol: oauth.protocol,
+          host: oauth.host,
+          uri: oauth.providers.facebook.redirectUri
+        }
+      };
 
     // 1
     // Perform Oauth steps

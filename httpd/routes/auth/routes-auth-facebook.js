@@ -2,8 +2,9 @@
 
 var config = require('./../../../config/app'),
   logger = require(config.get('root') + '/config/log'),
+
   signInUrl = require('oauth2-facebook').signInUrl,
-  authController = require(config.get('root') + '/httpd/controllers/auth/controller-auth');
+  authController = require(config.get('root') + '/httpd/controllers/auth/controller-auth-facebook');
 
 module.exports = function (router) {
 
@@ -58,6 +59,8 @@ module.exports = function (router) {
       }
     }
     catch (err) {
+
+      console.log(err.stack);
 
       logger.error(err);
 
