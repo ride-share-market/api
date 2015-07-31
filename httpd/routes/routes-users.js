@@ -20,7 +20,6 @@ module.exports = function (router) {
         this.body = yield usersController.findById(this.params.id);
       }
       catch (e) {
-        //console.log('e', e);
         this.throw(e.status, {message: {errors: e.errors}});
       }
 

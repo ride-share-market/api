@@ -34,7 +34,7 @@ describe('Controllers', function () {
         }
       });
 
-      describe('Fail', function() {
+      describe('Fail', function () {
 
         it('should handle missing required arguments', function *() {
 
@@ -92,7 +92,7 @@ describe('Controllers', function () {
 
       });
 
-      describe('Success', function() {
+      describe('Success', function () {
 
         it('should return a redirect URL', function *() {
 
@@ -112,13 +112,10 @@ describe('Controllers', function () {
             return q.resolve(result);
           });
 
-          try {
-            var redirectUrl = yield authController.linkedinCallback('abc123def456', 'xyz789');
-            redirectUrl.should.match(/.*#!\/welcome\?jwt=.*/);
-          }
-          catch (e) {
-            console.log('e', e.stack);
-          }
+
+          var redirectUrl = yield authController.linkedinCallback('abc123def456', 'xyz789');
+
+          redirectUrl.should.match(/.*#!\/welcome\?jwt=.*/);
 
         });
 

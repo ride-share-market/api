@@ -60,8 +60,6 @@ module.exports = function (router) {
     }
     catch (err) {
 
-      console.log(err.stack);
-
       logger.error(err);
 
       redirectUrl = [

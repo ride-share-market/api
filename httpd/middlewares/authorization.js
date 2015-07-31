@@ -10,11 +10,6 @@ function authorization() {
   return function *authorization(next) {
     /*jshint validthis: true*/
 
-//  console.log('*auth');
-//  console.log(this.params);
-//  console.log(this.header.token);
-//  console.log('*auth');
-
     var parts, scheme, credentials, token;
 
     if (this.header.authorization) {
