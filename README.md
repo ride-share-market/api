@@ -45,19 +45,39 @@ An error response may have one or more error objects with these properties:
     - Copy the _id from the new user into this new file `test/fixtures/user2_id.txt`
     - These two new files are used (read from) for unit and integration tests.
     - On the local VM machine copy in the same new user _id values (local and vbx share same mongodb):
+    - `cd /home/ubuntu`
     - `sudo -u ubuntu mkdir -p test/fixtures`
-    - `sudo -u ubuntu vi test/fixtures/valid_user_1_id.txt`
-    - `sudo -u ubuntu vi test/fixtures/valid_user_2_id.txt`  
+    - Use vim with the -b flag and set noel (see below) to fix annoying new line (/n) char that borks tests.
+    - Text fixture User 1
+    - `sudo -u ubuntu vim -b test/fixtures/valid_user_1_id.txt`
+    - `:set noeol`
+    - Paste in test user 1 ID
+    - `<shift> j` (make sure no tailing \n)
+    - save and exit
+    - Text fixture User 2
+    - `sudo -u ubuntu vim -b test/fixtures/valid_user_1_id.txt`
+    - `:set noeol`
+    - Paste in test user 1 ID
+    - `<shift> j` (make sure no tailing \n)    
+    - save and exit
     
-
 ## Gulp Tasks
 
 - `gulp help`
 
 ## Unit Tests
 
+The rsm data service needs to be running for the api tests to pass.
+There are some integration tests that will interact with the database.
+
+- Local Dev workstation
 - `gulp test`
 - `gulp watch-test`
+- CI server
+- `sudo su - jenkins`
+- `export PATH=$PATH:/var/lib/jenkins/tmp/iojs-v1.5.1-linux-x64/bin`
+- `cd jobs/api/workspace/`
+- `./node_modules/mocha/bin/mocha --recursive httpd`
 
 ## Run dev server
 
