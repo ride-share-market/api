@@ -1,6 +1,6 @@
 {
   "name": "ride-share-market-api",
-  "version": "1.3.9",
+  "version": "1.3.10",
   "description": "ridesharemarket.com HTTP API",
   "main": "app.js",
   "scripts": {
@@ -14,6 +14,7 @@
     "amqplib": "^0.3.2",
     "bunyan": "^1.3.5",
     "co": "^4.5.4",
+    "couchbase": "^2.0.12",
     "googleapis": "^1.0.12",
     "jsonwebtoken": "^5.0.1",
     "koa": "^0.21.0",
