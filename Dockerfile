@@ -1,11 +1,11 @@
 FROM ride-share-market/rsm-iojs:1.1.2
 MAINTAINER Ride Share Market "systemsadmin@ridesharemarket.com"
 
-# build-essential require to compile couchbase module
+# python and build-essential require to compile couchbase module
 # Git currently required for non-NPM registry modules
 RUN \
     apt-get -yqq update && \
-    apt-get install build-essential git-core -y && \
+    apt-get install python build-essential git-core -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
