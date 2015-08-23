@@ -7,7 +7,8 @@ var config = require('./../../../config/app'),
   oauth2LinkedIn = require('oauth2-linkedin'),
   rpcUserSignIn = require(config.get('root') + '/httpd/lib/rpc/users/rpc-users-signin'),
   jwtManager = require(config.get('root') + '/httpd/lib/jwt/jwtManager'),
-  timing = require(config.get('root') + '/httpd/lib/metrics/timing');
+  timing = require(config.get('root') + '/httpd/lib/metrics/timing'),
+  oauthState = require(config.get('root') + '/httpd/lib/oauth/lib-oauth-state');
 
 /**
  * Get a valid oauth2 access token from linkedin with the received oauth2 code
@@ -40,7 +41,10 @@ exports.linkedinCallback = function *linkedinCallback(code, state) {
 
   try {
 
-    // TODO validate state, test for possible CSRF attack
+    // Validate state - test for possible CSRF attack
+    var stateToken = yield oauthState.get(state);
+    yield oauthState.isValid(stateToken);
+    yield oauthState.remove(state);
 
     // 1
     // Perform Oauth steps
