@@ -37,7 +37,7 @@ An error response may have one or more error objects with these properties:
 2. Update the development and test .json files (ie. UPDATE-THIS-VALUE)
 3. The MongoDB database needs a some default users created for the tests to pass.
     - On the MongoDB server:
-    - `mongo rsm-dev`
+    - `sudo docker exec -it rsm-mongodb mongo rsm-dev`
     - `db.users.insert({"email": "net@citizen.com","currentProvider": "google","providers": {"google": {"displayName": "Net Citizen","url": "https://plus.google.com/103434308786179622443","image": {"url": "https://lh3.googleusercontent.com/photo.jpg?sz=50","isDefault": true}}}})`
     - `db.users.insert({"email": "web@citizen.com","currentProvider": "google","providers": {"google": {"displayName": "Web Citizen","url": "https://plus.google.com/103434308786179622444","image": {"url": "https://lh4.googleusercontent.com/photo.jpg?sz=50","isDefault": true}}}})`
     - On the local developer machine:
@@ -45,17 +45,16 @@ An error response may have one or more error objects with these properties:
     - Copy the _id from the new user into this new file `test/fixtures/user2_id.txt`
     - These two new files are used (read from) for unit and integration tests.
     - On the local VM machine copy in the same new user _id values (local and vbx share same mongodb):
-    - `cd /home/ubuntu`
-    - `sudo -u ubuntu mkdir -p test/fixtures`
+    - `mkdir -p /home/jenkins/jobs-config/api/test/fixtures`
     - Use vim with the -b flag and set noel (see below) to fix annoying new line (/n) char that borks tests.
     - Text fixture User 1
-    - `sudo -u ubuntu vim -b test/fixtures/valid_user_1_id.txt`
+    - `vim -b /home/jenkins/jobs-config/api/test/fixtures/valid_user_1_id.txt`
     - `:set noeol`
     - Paste in test user 1 ID
     - `<shift> j` (make sure no tailing \n)
     - save and exit
     - Text fixture User 2
-    - `sudo -u ubuntu vim -b test/fixtures/valid_user_1_id.txt`
+    - `vim -b /home/jenkins/jobs-config/api/test/fixtures/test/fixtures/valid_user_2_id.txt`
     - `:set noeol`
     - Paste in test user 1 ID
     - `<shift> j` (make sure no tailing \n)    
@@ -74,9 +73,9 @@ There are some integration tests that will interact with the database.
 - `gulp test`
 - `gulp watch-test`
 - CI server
-- `sudo su - jenkins`
-- `export PATH=$PATH:/var/lib/jenkins/tmp/iojs-v1.5.1-linux-x64/bin`
-- `cd jobs/api/workspace/`
+- `sudo docker exec -it rsm-jenkins bash`
+- `export PATH=$PATH:/var/jenkins_home/tmp/iojs-v1.5.1-linux-x64/bin`
+- `/var/jenkins_home/workspace/api`
 - `./node_modules/mocha/bin/mocha --recursive httpd`
 
 ## Run dev server
