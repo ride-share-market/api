@@ -7,7 +7,8 @@ var config = require('./../../../config/app'),
   oauthFacebook = require('oauth2-facebook'),
   rpcUserSignIn = require(config.get('root') + '/httpd/lib/rpc/users/rpc-users-signin'),
   jwtManager = require(config.get('root') + '/httpd/lib/jwt/jwtManager'),
-  timing = require(config.get('root') + '/httpd/lib/metrics/timing');
+  timing = require(config.get('root') + '/httpd/lib/metrics/timing'),
+  oauthState = require(config.get('root') + '/httpd/lib/oauth/lib-oauth-state');
 
 /**
  * Signin at facebook
@@ -25,20 +26,23 @@ exports.facebookCallback = function *facebookCallback(code, state) {
 
   var metrics = timing(Date.now());
 
+  var oauth = config.get('oauth'),
+    oauthConfig = {
+      appId: oauth.providers.facebook.appId,
+      appSecret: oauth.providers.facebook.appSecret,
+      redirectUrl: {
+        protocol: oauth.protocol,
+        host: oauth.host,
+        uri: oauth.providers.facebook.redirectUri
+      }
+    };
+
   try {
 
-    // TODO validate state
-
-    var oauth = config.get('oauth'),
-      oauthConfig = {
-        appId: oauth.providers.facebook.appId,
-        appSecret: oauth.providers.facebook.appSecret,
-        redirectUrl: {
-          protocol: oauth.protocol,
-          host: oauth.host,
-          uri: oauth.providers.facebook.redirectUri
-        }
-      };
+    // Validate state - test for possible CSRF attack
+    var stateToken = yield oauthState.get(state);
+    yield oauthState.isValid(stateToken);
+    yield oauthState.remove(state);
 
     // 1
     // Perform Oauth steps

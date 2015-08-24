@@ -12,6 +12,7 @@ var config = require('./../../../config/app'),
 
 var oauthFacebook = require('oauth2-facebook'),
   rpcPublisher = require(config.get('root') + '/httpd/lib/rpc/rpc-publisher'),
+  oauthState = require(config.get('root') + '/httpd/lib/oauth/lib-oauth-state'),
   fixtureFacebookAccessToken = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/oauth/facebook-access-token.json').toString()),
   fixtureFacebookUserProfile = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/oauth/facebook-user-profile.json').toString()),
   fixtureRpcUserSignIn = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/rpc_response-rpc-user-signIn.json').toString());
@@ -22,6 +23,26 @@ describe('Controllers', function () {
 
     describe('Facebook', function () {
 
+      beforeEach(function() {
+
+        sinon.stub(oauthState, 'get', function() {
+          return q.resolve({
+            created_at: 1439816401105,
+            expires_at: 1439816521105
+          });
+        });
+
+        sinon.stub(oauthState, 'isValid', function() {
+          return q.resolve('Valid oauth state token');
+        });
+
+        sinon.stub(oauthState, 'remove', function() {
+          return q.resolve(true);
+        });
+
+      });
+
+
       afterEach(function () {
         if (oauthFacebook.getAccessToken.restore) {
           oauthFacebook.getAccessToken.restore();
@@ -31,6 +52,18 @@ describe('Controllers', function () {
         }
         if (rpcPublisher.publish.restore) {
           rpcPublisher.publish.restore();
+        }
+
+        if (oauthState.get.restore) {
+          oauthState.get.restore();
+        }
+
+        if (oauthState.isValid.restore) {
+          oauthState.isValid.restore();
+        }
+
+        if (oauthState.remove.restore) {
+          oauthState.remove.restore();
         }
       });
 

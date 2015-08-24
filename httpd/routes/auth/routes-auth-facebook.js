@@ -3,8 +3,9 @@
 var config = require('./../../../config/app'),
   logger = require(config.get('root') + '/config/log'),
 
-  signInUrl = require('oauth2-facebook').signInUrl,
-  authController = require(config.get('root') + '/httpd/controllers/auth/controller-auth-facebook');
+  facebookSignIn = require('oauth2-facebook').signIn,
+  authController = require(config.get('root') + '/httpd/controllers/auth/controller-auth-facebook'),
+  oauthState = require(config.get('root') + '/httpd/lib/oauth/lib-oauth-state');
 
 module.exports = function (router) {
 
@@ -20,9 +21,15 @@ module.exports = function (router) {
       }
     };
 
-    this.redirect(signInUrl(oauthConfig));
+    var signIn = facebookSignIn(oauthConfig);
+
+    // Save state for CSRF attack prevention
+    yield oauthState.upsert(signIn.state);
+
+    this.redirect(signIn.url);
 
     yield next;
+
   });
 
   router.get('/auth/facebook/callback', function *(next) {
