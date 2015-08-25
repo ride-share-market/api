@@ -34,7 +34,7 @@ module.exports = function (app) {
 
   }
 
-  app.use(helmet.defaults());
+  app.use(helmet());
 
   app.use(bodyParser());
 
