@@ -1,7 +1,7 @@
 {
   "app": {
     "hostname": "127.0.0.1",
-    "port": "3002"
+    "port": "3001"
   },
   "jwtTokenSecret": "CHANGE_ME",
   "messageQueue": {
@@ -44,5 +44,15 @@
         "redirectUri": "/auth/linkedin/callback"
       }
     }
+  },
+  "metrics": {
+    "host": "met01.dev.vbx.ridesharemarket.com",
+    "port": 8125
+  },
+  "couchbase": {
+    "host": "192.168.33.10",
+    "oauthStateBucket": "oauthstate",
+    "oauthStateExpires": 120,
+    "oauthStateTtl": 125
   }
 }

@@ -7,7 +7,7 @@
     "rabbitmq": {
       "user": "rsm",
       "password": "CHANGE_ME",
-      "url": "127.0.0.1",
+      "url": "rsm-rabbitmq",
       "vhost": "/rsm"
     }
   },
@@ -46,7 +46,13 @@
     }
   },
   "metrics": {
-    "host": "met01.dev.vbx.ridesharemarket.com",
+    "host": "rsm-statsd-bridge",
     "port": 8125
+  },
+  "couchbase": {
+    "host": "rsm-couchbase",
+    "oauthStateBucket": "oauthstate",
+    "oauthStateExpires": 120,
+    "oauthStateTtl": 125
   }
 }

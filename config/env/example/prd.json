@@ -48,6 +48,12 @@
   },
   "metrics": {
     "host": "metrics.ridesharemarket.com",
-    "port": 8125
+    "port": 9125
+  },
+  "couchbase": {
+    "host": "192.168.33.10",
+    "oauthStateBucket": "oauthstate",
+    "oauthStateExpires": 120,
+    "oauthStateTtl": 125
   }
 }

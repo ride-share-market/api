@@ -45,5 +45,15 @@
         "url": "https://www.linkedin.com/uas/oauth2/authorization"
       }
     }
+  },
+  "metrics": {
+    "host": "met01.dev.vbx.ridesharemarket.com",
+    "port": 8125
+  },
+  "couchbase": {
+    "host": "192.168.33.10",
+    "oauthStateBucket": "oauthstate",
+    "oauthStateExpires": 120,
+    "oauthStateTtl": 125
   }
 }

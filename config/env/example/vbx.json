@@ -14,7 +14,7 @@
   },
   "oauth": {
     "protocol": "https://",
-    "host": "api.dev.loc.ridesharemarket.com:3001",
+    "host": "api.dev.vbx.ridesharemarket.com",
     "redirectUrl": {
       "location": "api.dev.vbx.ridesharemarket.com"
     },
@@ -45,5 +45,15 @@
         "url": "https://www.linkedin.com/uas/oauth2/authorization"
       }
     }
+  },
+  "metrics": {
+    "host": "metrics.ridesharemarket.com",
+    "port": 9125
+  },
+  "couchbase": {
+    "host": "192.168.33.10",
+    "oauthStateBucket": "oauthstate",
+    "oauthStateExpires": 120,
+    "oauthStateTtl": 125
   }
 }
