@@ -5,23 +5,16 @@ var config = require('./../../../config/app'),
 
   facebookSignIn = require('oauth2-facebook').signIn,
   authController = require(config.get('root') + '/httpd/controllers/auth/controller-auth-facebook'),
+  oauthConfig = require(config.get('root') + '/httpd/lib/oauth/lib-oauth-config'),
   oauthState = require(config.get('root') + '/httpd/lib/oauth/lib-oauth-state');
 
 module.exports = function (router) {
 
   router.get('/signin/facebook', function *signinFacebook(next) {
 
-    var oauth = config.get('oauth'),
-      oauthConfig = {
-      appId: oauth.providers.facebook.appId,
-      redirectUrl: {
-        protocol: oauth.protocol,
-        host: oauth.host,
-        uri: oauth.providers.facebook.redirectUri
-      }
-    };
+    var facebookOauthConfig = oauthConfig.get(config.get('oauth'), 'facebook');
 
-    var signIn = facebookSignIn(oauthConfig);
+    var signIn = facebookSignIn(facebookOauthConfig);
 
     // Save state for CSRF attack prevention
     yield oauthState.upsert(signIn.state);

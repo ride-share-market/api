@@ -12,8 +12,9 @@ var config = require('./../../../config/app'),
 
 var oauthFacebook = require('oauth2-facebook'),
   rpcPublisher = require(config.get('root') + '/httpd/lib/rpc/rpc-publisher'),
-  oauthState = require(config.get('root') + '/httpd/lib/oauth/lib-oauth-state'),
-  fixtureFacebookAccessToken = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/oauth/facebook-access-token.json').toString()),
+  oauthState = require(config.get('root') + '/httpd/lib/oauth/lib-oauth-state');
+
+var fixtureFacebookAccessToken = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/oauth/facebook-access-token.json').toString()),
   fixtureFacebookUserProfile = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/oauth/facebook-user-profile.json').toString()),
   fixtureRpcUserSignIn = JSON.parse(fs.readFileSync(config.get('root') + '/test/fixtures/rpc_response-rpc-user-signIn.json').toString());
 

@@ -8,6 +8,7 @@ var config = require('./../../../config/app'),
   rpcUserSignIn = require(config.get('root') + '/httpd/lib/rpc/users/rpc-users-signin'),
   jwtManager = require(config.get('root') + '/httpd/lib/jwt/jwtManager'),
   timing = require(config.get('root') + '/httpd/lib/metrics/timing'),
+  oauthConfig = require(config.get('root') + '/httpd/lib/oauth/lib-oauth-config'),
   oauthState = require(config.get('root') + '/httpd/lib/oauth/lib-oauth-state');
 
 /**
@@ -26,16 +27,7 @@ exports.facebookCallback = function *facebookCallback(code, state) {
 
   var metrics = timing(Date.now());
 
-  var oauth = config.get('oauth'),
-    oauthConfig = {
-      appId: oauth.providers.facebook.appId,
-      appSecret: oauth.providers.facebook.appSecret,
-      redirectUrl: {
-        protocol: oauth.protocol,
-        host: oauth.host,
-        uri: oauth.providers.facebook.redirectUri
-      }
-    };
+  var facebookOauthConfig = oauthConfig.get(config.get('oauth'), 'facebook');
 
   try {
 
@@ -46,7 +38,7 @@ exports.facebookCallback = function *facebookCallback(code, state) {
 
     // 1
     // Perform Oauth steps
-    var accessToken = yield oauthFacebook.getAccessToken(oauthConfig, code);
+    var accessToken = yield oauthFacebook.getAccessToken(facebookOauthConfig, code);
     var userProfile = yield oauthFacebook.getProfile(accessToken.accessToken);
 
     // 2

@@ -8,6 +8,7 @@ var config = require('./../../../config/app'),
   rpcUserSignIn = require(config.get('root') + '/httpd/lib/rpc/users/rpc-users-signin'),
   jwtManager = require(config.get('root') + '/httpd/lib/jwt/jwtManager'),
   timing = require(config.get('root') + '/httpd/lib/metrics/timing'),
+  oauthConfig = require(config.get('root') + '/httpd/lib/oauth/lib-oauth-config'),
   oauthState = require(config.get('root') + '/httpd/lib/oauth/lib-oauth-state');
 
 /**
@@ -27,17 +28,7 @@ exports.linkedinCallback = function *linkedinCallback(code, state) {
 
   var metrics = timing(Date.now());
 
-  var oauth = config.get('oauth');
-
-  var oauthConfig = {
-    clientId: oauth.providers.linkedin.clientId,
-    clientSecret: oauth.providers.linkedin.clientSecret,
-    redirectUrl: {
-      protocol: oauth.protocol,
-      host: oauth.host,
-      uri: oauth.providers.linkedin.redirectUri
-    }
-  };
+  var linkedinOauthConfig = oauthConfig.get(config.get('oauth'), 'linkedin');
 
   try {
 
@@ -48,7 +39,7 @@ exports.linkedinCallback = function *linkedinCallback(code, state) {
 
     // 1
     // Perform Oauth steps
-    var oAuthAccessToken = yield oauth2LinkedIn.getAccessToken(oauthConfig, logger.error.bind(logger), code);
+    var oAuthAccessToken = yield oauth2LinkedIn.getAccessToken(linkedinOauthConfig, logger.error.bind(logger), code);
 
     var oAuthUserProfile = yield oauth2LinkedIn.getProfile(logger.error.bind(logger), oAuthAccessToken.access_token);
 

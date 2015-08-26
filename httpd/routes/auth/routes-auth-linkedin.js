@@ -4,24 +4,16 @@ var config = require('./../../../config/app'),
   logger = require(config.get('root') + '/config/log'),
   linkedinSignInUrl = require('oauth2-linkedin').signInUrl,
   authController = require(config.get('root') + '/httpd/controllers/auth/controller-auth-linkedin'),
+  oauthConfig = require(config.get('root') + '/httpd/lib/oauth/lib-oauth-config'),
   oauthState = require(config.get('root') + '/httpd/lib/oauth/lib-oauth-state');
 
 module.exports = function (router) {
 
   router.get('/signin/linkedin', function *signinLinkedin(next) {
 
-    var oauth = config.get('oauth');
+    var linkedinOauthConfig = oauthConfig.get(config.get('oauth'), 'linkedin');
 
-    var oauthConfig = {
-      clientId: oauth.providers.linkedin.clientId,
-      redirectUrl: {
-        protocol: oauth.protocol,
-        host: oauth.host,
-        uri: oauth.providers.linkedin.redirectUri
-      }
-    };
-
-    var oauthUrlState = linkedinSignInUrl(oauthConfig);
+    var oauthUrlState = linkedinSignInUrl(linkedinOauthConfig);
 
     // Save oauthUrlState.state for CSRF attack prevention
     yield oauthState.upsert(oauthUrlState.state);
