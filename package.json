@@ -21,7 +21,7 @@
     "koa-compress": "^1.0.7",
     "koa-cors": "0.0.16",
     "koa-helmet": "^0.2.0",
-    "koa-json-logger": "0.0.22",
+    "koa-json-logger": "^1.0.0",
     "koa-jsonapi-headers": "^1.1.2",
     "koa-router": "^5.0.1",
     "lynx": "^0.2.0",
@@ -31,7 +31,7 @@
     "oauth2-linkedin": "^1.0.3",
     "q": "^1.4.1",
     "ramda": "^0.17.1",
-    "require-walk": "^0.1.4",
+    "require-walk": "^1.0.0",
     "uuid": "^2.0.1"
   },
   "devDependencies": {
