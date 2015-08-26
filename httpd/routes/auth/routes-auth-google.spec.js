@@ -9,7 +9,7 @@ var http = require('http'),
   app = koa();
 
 var config = require('./../../../config/app'),
-  authController = require(config.get('root') + '/httpd/controllers/auth/controller-auth');
+  authController = require(config.get('root') + '/httpd/controllers/auth/controller-auth-google');
 
 require('./routes-auth-google')(router);
 

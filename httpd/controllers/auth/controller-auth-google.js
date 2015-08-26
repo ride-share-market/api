@@ -4,7 +4,9 @@ var assert = require('assert');
 
 var config = require('./../../../config/app'),
   logger = require(config.get('root') + '/config/log'),
-  oauthGoogle = require(config.get('root') + '/httpd/lib/oauth/lib-oauth-google'),
+  oauthGoogle = require('oauth2-google'),
+  oauthConfig = require(config.get('root') + '/httpd/lib/oauth/lib-oauth-config'),
+  oauthState = require(config.get('root') + '/httpd/lib/oauth/lib-oauth-state'),
   rpcUserSignIn = require(config.get('root') + '/httpd/lib/rpc/users/rpc-users-signin'),
   jwtManager = require(config.get('root') + '/httpd/lib/jwt/jwtManager'),
   timing = require(config.get('root') + '/httpd/lib/metrics/timing');
@@ -18,26 +20,35 @@ var config = require('./../../../config/app'),
  * @param code Google Oauth access_code
  * @returns {string} URL - redirect to app URL
  */
-exports.googleCallback = function *googleCallback(code) {
+exports.googleCallback = function *googleCallback(code, state) {
 
   assert.equal(typeof (code), 'string', 'argument code must be a string');
+  assert.equal(typeof (state), 'string', 'argument state must be a string');
 
   var metrics = timing(Date.now());
 
+  var googleOauthConfig = oauthConfig.get(config.get('oauth'), 'google');
+
   try {
+
+    // Validate state - test for possible CSRF attack
+    var stateToken = yield oauthState.get(state);
+    yield oauthState.isValid(stateToken);
+    yield oauthState.remove(state);
 
     // 1
     // Perform Oauth steps
-    var oAuthUser = yield oauthGoogle(code);
+    var accessTokens = yield oauthGoogle.getAccessTokens(googleOauthConfig, code);
+    var userProfile = yield oauthGoogle.getProfile(googleOauthConfig, accessTokens);
 
     // 2
     // Add/Update database
-    var signedInUser = yield rpcUserSignIn('google', oAuthUser);
+    var signedInUser = yield rpcUserSignIn('google', userProfile);
 
     // 3
     // Generate JWT token
     var token = jwtManager.issueToken({
-      name: signedInUser.providers[signedInUser.currentProvider].name.givenName,
+      name: signedInUser.providers[signedInUser.currentProvider].displayName,
       id: signedInUser._id
     });
 
@@ -63,6 +74,7 @@ exports.googleCallback = function *googleCallback(code) {
   catch (err) {
 
     logger.error(err);
+
     metrics('controllers.auth.google.error', Date.now());
 
     // RPC Error
