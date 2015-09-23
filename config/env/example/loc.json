@@ -7,7 +7,7 @@
     "rabbitmq": {
       "user": "rsm",
       "password": "CHANGE_ME",
-      "url": "192.168.33.10",
+      "url": "192.168.33.100",
       "vhost": "/rsm"
     }
   },
@@ -51,7 +51,7 @@
     "port": 8125
   },
   "couchbase": {
-    "host": "192.168.33.10",
+    "host": "192.168.33.100",
     "oauthStateBucket": "oauthstate",
     "oauthStateExpires": 120,
     "oauthStateTtl": 125
