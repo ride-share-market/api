@@ -1,13 +1,13 @@
 {
   "app": {
-    "hostname": "api.prd.ams.ridesharemarket.com",
+    "hostname": "api.prd.aws.ridesharemarket.com",
     "port": 3001
   },
   "messageQueue": {
     "rabbitmq": {
       "user": "rsm",
       "password": "CHANGE_ME",
-      "url": "lan.rmq01.prd.ams.ridesharemarket.com",
+      "url": "lan.rmq01.prd.aws.ridesharemarket.com",
       "vhost": "/rsm"
     }
   },
@@ -51,7 +51,7 @@
     "port": 9125
   },
   "couchbase": {
-    "host": "192.168.33.100",
+    "host": "couchbase.ridesharemarket.com",
     "oauthStateBucket": "oauthstate",
     "oauthStateExpires": 120,
     "oauthStateTtl": 125
