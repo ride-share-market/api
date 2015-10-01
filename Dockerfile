@@ -5,7 +5,7 @@ MAINTAINER Ride Share Market "systemsadmin@ridesharemarket.com"
 # python and build-essential require to compile couchbase module
 RUN \
     apt-get -yqq update && \
-    apt-get install sudo python build-essential -y && \
+    apt-get install sudo logrotate python build-essential -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
