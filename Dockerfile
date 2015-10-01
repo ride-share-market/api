@@ -1,11 +1,11 @@
-FROM ride-share-market/rsm-iojs:1.1.2
+FROM node:4.1.1
 MAINTAINER Ride Share Market "systemsadmin@ridesharemarket.com"
 
+# sudo required for node app run as non root
 # python and build-essential require to compile couchbase module
-# Git currently required for non-NPM registry modules
 RUN \
     apt-get -yqq update && \
-    apt-get install python build-essential git-core -y && \
+    apt-get install sudo python build-essential -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -18,7 +18,7 @@ RUN \
     npm cache clean
 
 # Application
-ENV APP_REFRESHED_AT 2015-06-17.1
+ENV APP_REFRESHED_AT 2015-10-01.1
 ENV APP_DIR /srv/ride-share-market-api
 RUN \
     mkdir ${APP_DIR} && \

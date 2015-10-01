@@ -36,8 +36,10 @@ An error response may have one or more error objects with these properties:
 1. `gulp init`
 2. Update the development and test .json files (ie. UPDATE-THIS-VALUE)
 3. The MongoDB database needs a some default users created for the tests to pass.
-    - On the MongoDB server:
+    - On the MongoDB server VBX:
     - `sudo docker exec -it rsm-mongodb mongo rsm-dev`
+    - On the MongoDB server PRD:
+    - `sudo docker exec -it rsm-mongodb mongo rsm`    
     - `db.users.insert({"email": "net@citizen.com","currentProvider": "google","providers": {"google": {"displayName": "Net Citizen","url": "https://plus.google.com/103434308786179622443","image": {"url": "https://lh3.googleusercontent.com/photo.jpg?sz=50","isDefault": true}}}})`
     - `db.users.insert({"email": "web@citizen.com","currentProvider": "google","providers": {"google": {"displayName": "Web Citizen","url": "https://plus.google.com/103434308786179622444","image": {"url": "https://lh4.googleusercontent.com/photo.jpg?sz=50","isDefault": true}}}})`
     - On the local developer machine:
