@@ -1,6 +1,6 @@
 {
   "name": "ride-share-market-api",
-  "version": "1.4.7",
+  "version": "1.4.8",
   "description": "ridesharemarket.com HTTP API",
   "main": "app.js",
   "scripts": {
