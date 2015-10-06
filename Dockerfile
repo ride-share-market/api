@@ -1,4 +1,4 @@
-FROM node:4.1.1
+FROM node:4.1.2
 MAINTAINER Ride Share Market "systemsadmin@ridesharemarket.com"
 
 # sudo required for node app run as non root

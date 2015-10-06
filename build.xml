@@ -7,7 +7,7 @@
 
     <property name="test.fixtures" value="/var/jenkins_home/jobs-config/api/test/fixtures"/>
 
-    <property name="node.version" value="4.1.1"/>
+    <property name="node.version" value="4.1.2"/>
 
     <property name="node.src" value="/var/jenkins_home/tmp"/>
 
